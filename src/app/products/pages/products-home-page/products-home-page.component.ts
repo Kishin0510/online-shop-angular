@@ -6,11 +6,12 @@ import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ProductService } from '../../../_services/product.service';
 import { Product } from '../../../_interfaces/productDTO';
+import { PageButtonComponent } from '../../components/page-button/page-button.component';
 
 @Component({
   selector: 'app-products-home-page',
   standalone: true,
-  imports: [ProductCardComponent,SearchButtonComponent,OrderButtonComponent, CommonModule, HttpClientModule],
+  imports: [ProductCardComponent,SearchButtonComponent,OrderButtonComponent, CommonModule, HttpClientModule, PageButtonComponent],
   providers: [ProductService],
   templateUrl: './products-home-page.component.html',
   styleUrl: './products-home-page.component.css'
@@ -19,6 +20,7 @@ export class ProductsHomePageComponent implements OnInit {
 
   currentPage = 1;
   products: Product[] = [];
+  lastPage = 1;
 
   constructor(private productService: ProductService) { }
 
@@ -28,8 +30,12 @@ export class ProductsHomePageComponent implements OnInit {
 
   getProducts(): void {
     this.productService.getAllProducts(this.currentPage, 10).then((response) => {
-      this.products = response.result;
-      console.log(this.products);
+      if(response.result.length != 0) {
+        this.products = response.result;
+      } else {
+        this.lastPage = this.currentPage - 1;
+        this.currentPage = this.lastPage;
+      }
     }).catch((error) => {
       console.error("Error obteniendo productos", error);
     });
@@ -38,7 +44,7 @@ export class ProductsHomePageComponent implements OnInit {
   changePage(direction: 'next' | 'prev'): void {
     if (direction === 'next') {
       this.currentPage++;
-    } else if (direction === 'prev') {
+    } else if (direction === 'prev' && this.currentPage > 1) {
       this.currentPage--;
     }
     this.getProducts();

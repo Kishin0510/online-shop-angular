@@ -1,6 +1,10 @@
 <p>products-home-page works aaa!</p>
 <app-order-button></app-order-button>
 <app-search-button></app-search-button>
+<div>
+  <app-page-button action="prev" (clickButton)="changePage($event)"></app-page-button>
+  <app-page-button action="next" (clickButton)="changePage($event)"></app-page-button>
+</div>
 <div class="grid grid-cols-5 gap-5">
   <app-product-card
   *ngFor="let product of products"
