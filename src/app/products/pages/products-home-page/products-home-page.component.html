@@ -1,6 +1,6 @@
 <p>products-home-page works aaa!</p>
 <app-order-button></app-order-button>
-<app-search-button></app-search-button>
+<app-search-button (query)="searchQuery($event)"></app-search-button>
 <div>
   <app-page-button action="prev" (clickButton)="changePage($event)"></app-page-button>
   <app-page-button action="next" (clickButton)="changePage($event)"></app-page-button>

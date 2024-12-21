@@ -12,9 +12,10 @@ export class ProductService {
   public errors: string[] = [];
   private http = inject(HttpClient);
 
-  async getAllProducts(pageNum: number,pagSize: number ): Promise<ResponseAPIGetProduct> {
+  async getAllProducts(query: string, order: string ,pageNum: number,pagSize: number ): Promise<ResponseAPIGetProduct> {
     try {
-      const response = await firstValueFrom(this.http.get<ResponseAPIGetProduct>(`${this.baseUrl}/product/available/${pageNum}/${pagSize}`));
+      const queryParam = new HttpParams().set('query', query).set('order', order);
+      const response = await firstValueFrom(this.http.get<ResponseAPIGetProduct>(`${this.baseUrl}/product/available/${pageNum}/${pagSize}?${queryParam}`));
       return Promise.resolve(response);
 
     } catch (error) {

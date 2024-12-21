@@ -21,6 +21,8 @@ export class ProductsHomePageComponent implements OnInit {
   currentPage = 1;
   products: Product[] = [];
   lastPage = 1;
+  searchTerm = '';
+  searchOrder = '';
 
   constructor(private productService: ProductService) { }
 
@@ -29,9 +31,10 @@ export class ProductsHomePageComponent implements OnInit {
   }
 
   getProducts(): void {
-    this.productService.getAllProducts(this.currentPage, 10).then((response) => {
+    this.productService.getAllProducts(this.searchTerm, this.searchOrder,this.currentPage, 10).then((response) => {
       if(response.result.length != 0) {
         this.products = response.result;
+        console.log(this.products);
       } else {
         this.lastPage = this.currentPage - 1;
         this.currentPage = this.lastPage;
@@ -47,6 +50,12 @@ export class ProductsHomePageComponent implements OnInit {
     } else if (direction === 'prev' && this.currentPage > 1) {
       this.currentPage--;
     }
+    this.getProducts();
+  }
+
+  searchQuery(query: string): void {
+    this.searchTerm = query;
+    this.currentPage = 1;
     this.getProducts();
   }
 }
