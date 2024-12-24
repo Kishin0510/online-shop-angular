@@ -6,9 +6,14 @@ export const routes: Routes = [
     loadComponent: () => import('./products/pages/products-home-page/products-home-page.component').then((m) => m.ProductsHomePageComponent),
   },
   {
+    path: 'auth',
+    loadComponent: () => import('./users/pages/login-page/login-page.component').then((m) => m.LoginPageComponent),
+    pathMatch: 'full',
+  },
+  {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'home',
+    redirectTo: 'auth',
   },
   {
     path: '**',
