@@ -25,4 +25,17 @@ export class ProductService {
       return Promise.reject(e);
     }
   }
+
+  async getAllProductData(query: string, pageNum: number, pagSize: number): Promise<ResponseAPIGetProduct> {
+    try {
+      const queryParam = new HttpParams().set('query', query);
+      const response = await firstValueFrom(this.http.get<ResponseAPIGetProduct>(`${this.baseUrl}/product/search/${pageNum}/${pagSize}?${queryParam}`));
+      return Promise.resolve(response);
+    } catch (error) {
+      console.error("Error obteniendo productos", error);
+      let e = error as HttpErrorResponse;
+      this.errors.push(e.message);
+      return Promise.reject(e);
+    }
+  }
 }
