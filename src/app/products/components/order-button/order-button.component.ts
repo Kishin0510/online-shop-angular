@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-order-button',
@@ -9,5 +9,10 @@ import { Component } from '@angular/core';
   styleUrl: './order-button.component.css'
 })
 export class OrderButtonComponent {
+  @Input() action!: 'asc' | 'desc';
+  @Output() clickButton = new EventEmitter<'asc' | 'desc'>();
 
+  onClick(): void {
+    this.clickButton.emit(this.action);
+  }
 }

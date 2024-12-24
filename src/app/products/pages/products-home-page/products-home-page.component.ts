@@ -58,5 +58,10 @@ export class ProductsHomePageComponent implements OnInit {
     this.currentPage = 1;
     this.getProducts();
   }
+  orderQuery(order: 'asc' | 'desc'): void {
+    this.searchOrder = order;
+    this.currentPage = 1;
+    this.getProducts();
+  }
 }
 
