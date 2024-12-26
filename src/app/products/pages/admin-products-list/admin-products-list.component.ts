@@ -4,11 +4,12 @@ import { ProductService } from '../../../_services/product.service';
 import { ProductsListComponent } from '../../components/products-list/products-list.component';
 import { SearchButtonComponent } from '../../components/search-button/search-button.component';
 import { PageButtonComponent } from '../../components/page-button/page-button.component';
+import { AddProductButtonComponent } from '../../components/add-product-button/add-product-button.component';
 
 @Component({
   selector: 'app-admin-products-list',
   standalone: true,
-  imports: [ProductsListComponent, SearchButtonComponent, PageButtonComponent],
+  imports: [ProductsListComponent, SearchButtonComponent, PageButtonComponent, AddProductButtonComponent],
   templateUrl: './admin-products-list.component.html',
   styleUrl: './admin-products-list.component.css'
 })

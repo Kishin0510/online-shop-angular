@@ -19,3 +19,11 @@ export interface Product {
   imgURL:      string;
   productType: string;
 }
+
+export interface addProduct {
+  Name:         string;
+  Price:        number;
+  Stock:        number;
+  Image:        File;
+  ProductTypeId: number;
+}

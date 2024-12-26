@@ -11,7 +11,22 @@ export const routes: Routes = [
   },
   {
     path: 'admin',
-    loadComponent: () => import('./products/pages/admin-products-list/admin-products-list.component').then((m) => m.AdminProductsListComponent),
+    loadComponent: () => import('./admin/pages/admin-home-page/admin-home-page.component').then((m) => m.AdminHomePageComponent),
+    children: [
+      {
+        path: 'create',
+        loadComponent: () => import('./products/pages/create-product/create-product.component').then((m) => m.CreateProductComponent),
+      },
+      {
+        path: 'products',
+        loadComponent: () => import('./products/pages/admin-products-list/admin-products-list.component').then((m) => m.AdminProductsListComponent),
+      },
+      {
+        path: '',
+        redirectTo: 'admin',
+        pathMatch: 'full',
+      }
+    ]
   },
   {
     path: '',

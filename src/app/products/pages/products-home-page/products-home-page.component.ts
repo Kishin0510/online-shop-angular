@@ -8,6 +8,7 @@ import { ProductService } from '../../../_services/product.service';
 import { Product } from '../../../_interfaces/productDTO';
 import { PageButtonComponent } from '../../components/page-button/page-button.component';
 
+
 @Component({
   selector: 'app-products-home-page',
   standalone: true,

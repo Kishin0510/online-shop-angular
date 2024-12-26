@@ -1,6 +1,6 @@
 import { environment } from './../../environments/environtment.development';
 import { inject, Injectable } from '@angular/core';
-import { Product, ResponseAPIGetProduct } from '../_interfaces/productDTO';
+import { Product, ResponseAPIGetProduct, addProduct } from '../_interfaces/productDTO';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 
@@ -37,5 +37,28 @@ export class ProductService {
       this.errors.push(e.message);
       return Promise.reject(e);
     }
+  }
+
+  async createProduct(product: FormData): Promise<string>{
+    try {
+      const response = await firstValueFrom(this.http.post<string>(`${this.baseUrl}/product`, product, {
+        headers: {}, responseType: 'text' as 'json'
+      }));
+      console.log('Producto en service, response:', response);
+      return Promise.resolve(response);
+
+    } catch (error) {
+      console.error('Error creando el producto', error);
+
+      if(error instanceof HttpErrorResponse){
+        const errorMessage = typeof error.error === 'string' ? error.error : error.message;
+        this.errors.push(errorMessage);
+      }
+      return Promise.reject(error);
+    }
+  }
+
+  getErrors(): string[] {
+    return this.errors;
   }
 }
