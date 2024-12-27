@@ -1,0 +1,18 @@
+<div class="flex items-center space-y-4">
+  <div class="flex items-center space-x-4">
+    <app-search-button (query)="searchQuery($event)"></app-search-button>
+    <app-order-button action="asc" (clickButton)="orderQuery($event)"></app-order-button>
+    <app-order-button action="desc" (clickButton)="orderQuery($event)"></app-order-button>
+  </div>
+  <div class="flex items-center space-x-4 justify-center ml-16">
+    <app-page-button action="prev" (clickButton)="changePage($event)"></app-page-button>
+    <app-page-button action="next" (clickButton)="changePage($event)"></app-page-button>
+  </div>
+</div>
+<div class="grid grid-cols-5 gap-5">
+  <app-product-card
+  *ngFor="let product of products"
+  [product]="product">
+  </app-product-card>
+</div>
+
