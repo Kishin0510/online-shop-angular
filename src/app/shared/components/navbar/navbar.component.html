@@ -1,0 +1,23 @@
+<nav class="bg-green-400 flex items-center">
+  <div class="flex items-start p-4 pl-10">
+    <a href="/products" class="block rounded-full">
+      <img src="assets/images/logo.jpg" alt="logo" class="h-32 w-32 rounded-full" />
+    </a>
+  </div>
+  <div *ngIf="!isLogged" class="space-x-4">
+    <a href="/auth" (click)="changePage('login')">
+      <button class="bg-gray-600 hover:bg-blue-950 text-white font-bold py-2 px-4 rounded-lg">Iniciar Sesión</button>
+    </a>
+    <a href="/auth">
+      <button class="bg-gray-600 hover:bg-blue-950 text-white font-bold py-2 px-4 rounded-lg">Registrarse</button>
+    </a>
+  </div>
+  <div *ngIf="isLogged">
+    <button (click)="logout()" class="bg-gray-600 hover:bg-blue-950 text-white font-bold py-2 px-4 rounded-lg">Cerrar Sesión</button>
+  </div>
+  <div class="ml-auto flex items-center justify-end p-4 pr-10">
+    <a href="/" class="block rounded-full">
+      <img src="assets/images/CarritoCompra.png" alt="cart" class="h-32 w-32 items-center rounded-full bg-gray-600" />
+    </a>
+  </div>
+</nav>
