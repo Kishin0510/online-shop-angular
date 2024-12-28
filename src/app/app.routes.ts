@@ -26,6 +26,10 @@ export const routes: Routes = [
         loadComponent: () => import('./users/pages/users-list/users-list.component').then((m) => m.UsersListComponent),
       },
       {
+        path: 'purchases',
+        loadComponent: () => import('./purchases/pages/admin-purchases-list/admin-purchases-list.component').then((m) => m.AdminPurchasesListComponent),
+      },
+      {
         path: '',
         redirectTo: 'admin/products',
         pathMatch: 'full',

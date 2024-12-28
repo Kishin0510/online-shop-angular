@@ -13,7 +13,7 @@ import { AddProductButtonComponent } from '../../components/add-product-button/a
   templateUrl: './admin-products-list.component.html',
   styleUrl: './admin-products-list.component.css'
 })
-export class AdminProductsListComponent {
+export class AdminProductsListComponent implements OnInit {
 
   currentPage = 1;
   lastPage = 1;
