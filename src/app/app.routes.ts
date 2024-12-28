@@ -18,6 +18,10 @@ export const routes: Routes = [
     loadComponent: () => import('./users/pages/edit-user-page/edit-user-page.component').then((m) => m.EditUserPageComponent),
   },
   {
+    path: 'password',
+    loadComponent: () => import('./users/pages/edit-password/edit-password.component').then((m) => m.EditPasswordComponent),
+  },
+  {
     path: 'admin',
     loadComponent: () => import('./admin/pages/admin-home-page/admin-home-page.component').then((m) => m.AdminHomePageComponent),
     children: [

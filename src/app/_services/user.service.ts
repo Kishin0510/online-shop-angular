@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import { environment } from '../../environments/environtment.development';
-import { ResponseAPIGetUsers } from '../_interfaces/usersDTO';
+import { ResponseAPIGetUsers, editPassword } from '../_interfaces/usersDTO';
 import { editUser } from '../_interfaces/user-auth';
 
 @Injectable({
@@ -36,6 +36,24 @@ export class UserService {
       return Promise.resolve(response);
     } catch (error) {
       console.error('Error editando el usuario', error);
+
+      if (error instanceof HttpErrorResponse) {
+        const errorMessage = typeof error.error === 'string' ? error.error : error.message;
+        this.errors.push(errorMessage);
+      }
+      return Promise.reject(error);
+    }
+  }
+
+  async editPassword(id: number, newPassword: editPassword): Promise<string> {
+    try {
+      const response = await firstValueFrom(this.http.put<string>(`${this.baseUrl}/user/${id}/password/`, newPassword, {
+        headers: {}, responseType: 'text' as 'json'
+      }));
+      console.log('Password en service, response:', response);
+      return Promise.resolve(response);
+    } catch (error) {
+      console.error('Error editando el password', error);
 
       if (error instanceof HttpErrorResponse) {
         const errorMessage = typeof error.error === 'string' ? error.error : error.message;

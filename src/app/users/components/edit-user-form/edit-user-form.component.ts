@@ -63,7 +63,6 @@ export class EditUserFormComponent implements OnInit {
       console.error('Error al editar el usuario', error);
       this.error = true;
       this.errorMessage = error;
-      console.log('Error al editar el usuario:', error);
     }
   }
 }

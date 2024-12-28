@@ -41,3 +41,9 @@ export interface addUser {
   password:        string;
   ConfirmPassword: string;
 }
+
+export interface editPassword {
+  oldpassword:     string;
+  newpassword:     string;
+  Confirmnewpassword: string;
+}
