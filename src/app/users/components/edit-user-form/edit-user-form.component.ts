@@ -18,6 +18,8 @@ export class EditUserFormComponent implements OnInit {
   errorMessage: string[] = [];
   userService = inject(UserService);
   LocalStorageService = inject(LocalStorageService);
+  userRut = this.LocalStorageService.getVariable('user').rut;
+  userEmail = this.LocalStorageService.getVariable('user').email;
   userName = this.LocalStorageService.getVariable('user').name;
   userBirthdate = this.LocalStorageService.getVariable('user').birthdate;
   userGenderId = this.LocalStorageService.getVariable('user').gender.id;

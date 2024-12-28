@@ -29,6 +29,6 @@ export class NavbarComponent {
   logout() {
     this.LLService.removeValue('token');
     this.LLService.removeValue('user');
-    this.router.navigate(['/']);
+    this.router.navigate(['/products']);
   }
 }
