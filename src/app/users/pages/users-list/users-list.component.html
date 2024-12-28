@@ -1,0 +1,11 @@
+<div>
+  <div class="flex items-center space-x-4">
+    <app-search-button (query)="searchQuery($event)"></app-search-button>
+    <div class="flex justify-center mt-3">
+      <app-page-button action="prev" (clickButton)="changePage($event)"></app-page-button>
+      <app-page-button action="next" (clickButton)="changePage($event)"></app-page-button>
+  </div>
+</div>
+<div>
+  <app-user-list [users]="usersArray"></app-user-list>
+</div>

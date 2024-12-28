@@ -1,0 +1,74 @@
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+  <!-- Header Section -->
+  <div class="p-4 bg-white dark:bg-gray-800">
+    <h2 class="text-2xl font-semibold text-gray-900 dark:text-white">
+      Lista de Usuarios
+    </h2>
+    <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
+      Gestion de Usuarios
+    </p>
+  </div>
+
+  <!-- Table -->
+  @if (0 < users.length) {
+  <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+    <!-- Table Header -->
+    <thead
+      class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+    >
+      <tr>
+        @for (header of tableHeaders; track header.key) {
+        <th scope="col" class="px-6 py-3">
+          {{ header.label }}
+        </th>
+        }
+        <th scope="col" class="px-6 py-3">
+          <span class="sr-only">Acciones</span>
+        </th>
+      </tr>
+    </thead>
+
+    <!-- Table Body -->
+    <tbody>
+      @for (user of users; track user.id) {
+      <tr
+        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+      >
+        <td class="px-6 py-4">
+          {{ user.id }}
+        </td>
+        <td class="px-6 py-4">
+          {{ user.rut }}
+        </td>
+        <td class="px-6 py-4">
+          {{ user.name }}
+        </td>
+        <td class="px-6 py-4">
+          {{ user.email }}
+        </td>
+        <td class="px-6 py-4">
+          {{ user.birthdate }}
+        </td>
+        <td class="px-6 py-4">
+          {{ user.gender.type }}
+        </td>
+        <td class="px-6 py-4">
+          {{ user.rol.name }}
+        </td>
+        <td class="px-6 py-4">
+          {{ user.active }}
+        </td>
+        <td class="px-6 py-4 text-right">
+          <button
+            type="button"
+            class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+          >
+            Editar
+          </button>
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+  }
+</div>

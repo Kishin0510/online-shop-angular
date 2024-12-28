@@ -22,8 +22,12 @@ export const routes: Routes = [
         loadComponent: () => import('./products/pages/admin-products-list/admin-products-list.component').then((m) => m.AdminProductsListComponent),
       },
       {
+        path: 'users',
+        loadComponent: () => import('./users/pages/users-list/users-list.component').then((m) => m.UsersListComponent),
+      },
+      {
         path: '',
-        redirectTo: 'admin',
+        redirectTo: 'admin/products',
         pathMatch: 'full',
       }
     ]
