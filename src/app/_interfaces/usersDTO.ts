@@ -35,9 +35,9 @@ export interface Rol {
 export interface addUser {
   rut:             string;
   name:            string;
-  birthday:        Date;
+  birthday:        string;
   Email:           string;
-  GenderId:        number;
+  GenderId:        string;
   password:        string;
   ConfirmPassword: string;
 }

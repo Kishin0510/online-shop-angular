@@ -23,3 +23,14 @@ export interface Rol {
   id:   number;
   name: string;
 }
+
+export interface ResponseAPIRegister {
+  user:  User;
+  token: string;
+}
+
+export interface editUser {
+  name:     string;
+  birthdate: Date;
+  genderId: number;
+}

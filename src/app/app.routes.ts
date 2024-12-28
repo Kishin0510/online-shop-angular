@@ -10,6 +10,14 @@ export const routes: Routes = [
     loadComponent: () => import('./users/pages/login-page/login-page.component').then((m) => m.LoginPageComponent),
   },
   {
+    path: 'register',
+    loadComponent: () => import('./users/pages/register-page/register-page.component').then((m) => m.RegisterPageComponent),
+  },
+  {
+    path: 'edit',
+    loadComponent: () => import('./users/pages/edit-user-page/edit-user-page.component').then((m) => m.EditUserPageComponent),
+  },
+  {
     path: 'admin',
     loadComponent: () => import('./admin/pages/admin-home-page/admin-home-page.component').then((m) => m.AdminHomePageComponent),
     children: [

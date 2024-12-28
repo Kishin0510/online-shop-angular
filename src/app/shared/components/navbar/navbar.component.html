@@ -8,12 +8,23 @@
     <a href="/auth" (click)="changePage('login')">
       <button class="bg-gray-600 hover:bg-blue-950 text-white font-bold py-2 px-4 rounded-lg">Iniciar Sesión</button>
     </a>
-    <a href="/auth">
+    <a href="/register" (click)="changePage('register')">
       <button class="bg-gray-600 hover:bg-blue-950 text-white font-bold py-2 px-4 rounded-lg">Registrarse</button>
     </a>
   </div>
   <div *ngIf="isLogged">
     <button (click)="logout()" class="bg-gray-600 hover:bg-blue-950 text-white font-bold py-2 px-4 rounded-lg">Cerrar Sesión</button>
+  </div>
+  <div *ngIf="isAdmin">
+    <a href="/admin/products">
+      <button class="bg-gray-600 hover:bg-blue-950 text-white font-bold py-2 px-4 rounded-lg">Administrar Productos</button>
+    </a>
+    <a href="/admin/users">
+      <button class="bg-gray-600 hover:bg-blue-950 text-white font-bold py-2 px-4 rounded-lg">Administrar Usuarios</button>
+    </a>
+    <a href="/admin/purchases">
+      <button class="bg-gray-600 hover:bg-blue-950 text-white font-bold py-2 px-4 rounded-lg">Administrar Compras</button>
+    </a>
   </div>
   <div class="ml-auto flex items-center justify-end p-4 pr-10">
     <a href="/" class="block rounded-full">

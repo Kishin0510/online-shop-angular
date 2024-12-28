@@ -2,7 +2,8 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import { environment } from '../../environments/environtment.development';
-import { ResponseAPIGetUsers, addUser } from '../_interfaces/usersDTO';
+import { ResponseAPIGetUsers } from '../_interfaces/usersDTO';
+import { editUser } from '../_interfaces/user-auth';
 
 @Injectable({
   providedIn: 'root'
@@ -26,24 +27,22 @@ export class UserService {
     }
   }
 
-  async registerUser(user: addUser): Promise<string> {
+  async editUser(id: number, user: editUser): Promise<string> {
     try {
-      console.log('Usuario en service:', user);
-
-      const response = await firstValueFrom(this.http.post<string>(`${this.baseUrl}/auth/register`, user, {
+      const response = await firstValueFrom(this.http.put<string>(`${this.baseUrl}/user/${id}`, user, {
         headers: {}, responseType: 'text' as 'json'
       }));
       console.log('Usuario en service, response:', response);
       return Promise.resolve(response);
-     } catch (error) {
+    } catch (error) {
+      console.error('Error editando el usuario', error);
 
-      console.error('Error creando el usuario', error);
       if (error instanceof HttpErrorResponse) {
         const errorMessage = typeof error.error === 'string' ? error.error : error.message;
         this.errors.push(errorMessage);
       }
       return Promise.reject(error);
-     }
+    }
   }
 
   getErrors(): string[] {

@@ -16,6 +16,7 @@ export class NavbarComponent {
   currentPage: string;
   private LLService = inject(LocalStorageService);
   isLogged: boolean = this.LLService.getVariable('token') ? true : false;
+  isAdmin: boolean = this.LLService.getVariable('user') ? this.LLService.getVariable('user').rol.id === 1 : false;
 
   constructor(private router: Router) {
     this.currentPage = 'products';
