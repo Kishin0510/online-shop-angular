@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Product } from '../../../_interfaces/productDTO';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-products-list',
@@ -11,6 +12,8 @@ import { Product } from '../../../_interfaces/productDTO';
 export class ProductsListComponent {
   @Input() products: Product[] = [];
 
+  constructor(private router: Router) {}
+
   protected readonly tableHeaders = [
     { key: 'id', label: 'ID' },
     { key: 'name', label: 'Nombre' },
@@ -19,4 +22,9 @@ export class ProductsListComponent {
     { key: 'productType', label: 'Tipo de producto' },
     { key: 'imgURL', label: 'Imagen' },
   ];
+
+  editProduct(product: Product) {
+    console.log('Product:', product);
+    this.router.navigate(['admin/products/edit', product.id]);
+  }
 }

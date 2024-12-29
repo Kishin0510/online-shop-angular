@@ -34,6 +34,10 @@ export const routes: Routes = [
         loadComponent: () => import('./products/pages/admin-products-list/admin-products-list.component').then((m) => m.AdminProductsListComponent),
       },
       {
+        path: 'products/edit/:id',
+        loadComponent: () => import('./products/pages/edit-products-page/edit-products-page.component').then((m) => m.EditProductsPageComponent),
+      },
+      {
         path: 'users',
         loadComponent: () => import('./users/pages/users-list/users-list.component').then((m) => m.UsersListComponent),
       },

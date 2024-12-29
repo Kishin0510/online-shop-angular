@@ -3,7 +3,7 @@ import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http'
 import { firstValueFrom } from 'rxjs';
 import { environment } from '../../environments/environtment.development';
 import { ResponseAPIGetUsers, editPassword } from '../_interfaces/usersDTO';
-import { editUser } from '../_interfaces/user-auth';
+import { editUser, Gender } from '../_interfaces/user-auth';
 
 @Injectable({
   providedIn: 'root'
@@ -60,6 +60,18 @@ export class UserService {
         this.errors.push(errorMessage);
       }
       return Promise.reject(error);
+    }
+  }
+
+  async getGenders(): Promise<Gender[]> {
+    try {
+      const response = await firstValueFrom(this.http.get<Gender[]>(`${this.baseUrl}/user/genders`));
+      return Promise.resolve(response);
+    } catch(error) {
+      console.error('Error obteniendo géneros', error);
+      let e = error as HttpErrorResponse;
+      this.errors.push(e.message);
+      return Promise.reject(e);
     }
   }
 
