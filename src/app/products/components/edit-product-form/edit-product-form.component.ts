@@ -3,7 +3,8 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../../../_services/product.service';
-import { Product } from '../../../_interfaces/productDTO';
+import { Product, productType } from '../../../_interfaces/productDTO';
+
 
 @Component({
   selector: 'app-edit-product-form',
@@ -18,6 +19,9 @@ export class EditProductFormComponent implements OnInit {
   errorMessage: string[] = [];
   productService = inject(ProductService);
   product!: Product;
+  selectedImage: boolean = false;
+  productTypes: productType[] = [];
+  productTypesNames: string[] = [];
 
   constructor(private fb: FormBuilder, private router: Router, private activatedRoute: ActivatedRoute) {}
 
@@ -30,6 +34,11 @@ export class EditProductFormComponent implements OnInit {
         console.log('Producto:', this.product);
         this.forms.patchValue(this.product);
        });
+      this.productService.getProductTypes().then((response) => {
+        this.productTypes = response;
+        this.productTypesNames = this.productTypes.map((type) => type.type);
+        console.log('Tipos de producto:', this.productTypesNames);
+      })
     } else {
       this.error = true;
       this.errorMessage = ['No se ha seleccionado un producto para editar'];
@@ -41,8 +50,8 @@ export class EditProductFormComponent implements OnInit {
       name: ['', Validators.required],
       price: [0, Validators.required],
       stock: [0, Validators.required],
-      //image: [null, Validators],
-      //productTypeId: [this.product.productType, Validators],
+      image: [null],
+      productType: ['', Validators.required],
     });
   }
 
@@ -50,14 +59,21 @@ export class EditProductFormComponent implements OnInit {
     if (this.forms.invalid) return;
     try {
       const formData = new FormData();
-      if (this.product.name !== this.forms.get('name')?.value) {
+      const formValues = this.forms.value;
+      if (this.product.name !== formValues.name) {
         formData.append('Name', this.forms.get('name')?.value);
       }
       formData.append('Price', this.forms.get('price')?.value);
       formData.append('Stock', this.forms.get('stock')?.value);
-      //formData.append('Image', this.forms.get('image')?.value);
-      //formData.append('ProductTypeId', this.forms.get('productTypeId')?.value);
 
+      if (this.selectedImage) {
+        console.log('Imagen seleccionada');
+        formData.append('Image', this.forms.get('image')?.value);
+      }
+      if (this.product.productType !== formValues.productType) {
+        const selectedProductTypeId = this.productTypes.find((type) => type.type === formValues.productType)?.id || 1;
+        formData.append('ProductTypeId', selectedProductTypeId.toString());
+      }
       const response = await this.productService.editProduct(this.product.id, formData);
       console.log('Response:', response);
 
@@ -78,8 +94,9 @@ export class EditProductFormComponent implements OnInit {
   }
 
   onFileChange(event: any) {
-    const file = event.tarjet.files[0];
+    const file = event.target.files[0];
     if (file) {
+      this.selectedImage = true;
       this.forms.patchValue({
         image: file
       });

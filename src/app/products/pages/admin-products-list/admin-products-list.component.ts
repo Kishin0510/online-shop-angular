@@ -6,6 +6,7 @@ import { SearchButtonComponent } from '../../components/search-button/search-but
 import { PageButtonComponent } from '../../components/page-button/page-button.component';
 import { AddProductButtonComponent } from '../../components/add-product-button/add-product-button.component';
 
+
 @Component({
   selector: 'app-admin-products-list',
   standalone: true,
@@ -54,4 +55,5 @@ export class AdminProductsListComponent implements OnInit {
     }
     this.getProducts();
   }
+
 }

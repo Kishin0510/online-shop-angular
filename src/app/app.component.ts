@@ -3,6 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import { initFlowbite } from 'flowbite';
 import { NavbarComponent } from './shared/components/navbar/navbar.component';
 
+
 @Component({
   selector: 'app-root',
   standalone: true,
