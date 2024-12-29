@@ -1,5 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { Result } from '../../../_interfaces/usersDTO';
+import { UserService } from '../../../_services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-list',
@@ -10,6 +12,9 @@ import { Result } from '../../../_interfaces/usersDTO';
 })
 export class UserListComponent {
   @Input() users: Result[] = [];
+  userService = inject(UserService);
+
+  constructor(private router: Router) {}
 
   protected readonly tableHeaders = [
     { key: 'id', label: 'ID' },
@@ -21,4 +26,15 @@ export class UserListComponent {
     { key: 'rol', label: 'Rol' },
     { key: 'active', label: 'Estado' },
   ];
+
+  editUserStatus(user: Result) {
+    const newStatus = user.active ? 'false' : 'true';
+    this.userService.changeStatus(user.id, newStatus).then(() => {
+      console.log('Usuario editado');
+      this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+        this.router.navigate(['/admin/users']);
+      });
+    });
+  }
+
 }

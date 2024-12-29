@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import { environment } from '../../environments/environtment.development';
 import { ResponseAPIGetUsers, editPassword } from '../_interfaces/usersDTO';
@@ -54,6 +54,24 @@ export class UserService {
       return Promise.resolve(response);
     } catch (error) {
       console.error('Error editando el password', error);
+
+      if (error instanceof HttpErrorResponse) {
+        const errorMessage = typeof error.error === 'string' ? error.error : error.message;
+        this.errors.push(errorMessage);
+      }
+      return Promise.reject(error);
+    }
+  }
+
+  async changeStatus(id: number, status: string): Promise<string> {
+    try {
+      const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+      const body = JSON.stringify(status);
+      const response = await firstValueFrom(this.http.put<string>(`${this.baseUrl}/user/${id}/state`, body, { headers, responseType: 'text' as 'json' }));
+      console.log('Cambiando estado del usuario, response:', response);
+      return Promise.resolve(response);
+    } catch (error) {
+      console.error('Error cambiando el estado del usuario', error);
 
       if (error instanceof HttpErrorResponse) {
         const errorMessage = typeof error.error === 'string' ? error.error : error.message;

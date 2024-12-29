@@ -2,7 +2,8 @@ import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ProductService } from '../../../_services/product.service';
-
+import { productType } from '../../../_interfaces/productDTO';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-product',
@@ -16,11 +17,14 @@ export class CreateProductComponent implements OnInit {
   error: boolean = false;
   errorMessage: string[] = [];
   productService = inject(ProductService);
+  productTypes: productType[] = [];
+  productTypesNames: string[] = [];
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private router: Router) {}
 
   ngOnInit(): void {
     this.createForm();
+    this.getProductTypes();
   }
 
   createForm() {
@@ -29,7 +33,15 @@ export class CreateProductComponent implements OnInit {
       price: ['', Validators.required],
       stock: ['', Validators.required],
       image: [null, Validators.required],
-      productTypeId: ['', Validators.required],
+      productType: ['', Validators.required],
+    });
+  }
+
+  getProductTypes() {
+    this.productService.getProductTypes().then((response) => {
+      this.productTypes = response;
+      this.productTypesNames = this.productTypes.map((type) => type.type);
+      console.log('Tipos de producto:', this.productTypes);
     });
   }
 
@@ -41,7 +53,9 @@ export class CreateProductComponent implements OnInit {
       formData.append('Price', this.forms.get('price')?.value);
       formData.append('Stock', this.forms.get('stock')?.value);
       formData.append('Image', this.forms.get('image')?.value);
-      formData.append('ProductTypeId', this.forms.get('productTypeId')?.value);
+
+      const productTypeId = this.productTypes.find((type) => type.type === this.forms.get('productType')?.value)?.id || 1;
+      formData.append('ProductTypeId', productTypeId?.toString());
 
       const response = await this.productService.createProduct(formData);
       console.log('Response:', response);
@@ -50,6 +64,7 @@ export class CreateProductComponent implements OnInit {
         this.error = false;
         this.errorMessage = [];
         console.log('Producto creado con éxito', response);
+        this.router.navigate(['/products']);
       }
       else {
         this.error = true;
