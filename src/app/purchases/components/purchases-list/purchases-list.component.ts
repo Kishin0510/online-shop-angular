@@ -1,6 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { ResponseAPIGetPurchases, PurchaseProduct } from '../../../_interfaces/purchaseDTO';
 import { CommonModule } from '@angular/common';
+import { Product } from '../../../_interfaces/productDTO';
 
 @Component({
   selector: 'app-purchases-list',
@@ -12,6 +13,7 @@ import { CommonModule } from '@angular/common';
 export class PurchasesListComponent {
   @Input() purchases: ResponseAPIGetPurchases[] = [];
   @Input() purchaseProducts: PurchaseProduct[] = [];
+  @Input() products: Product[] = [];
 
   protected readonly tableHeaders = [
     { key: 'id', label: 'ID' },
@@ -22,6 +24,9 @@ export class PurchasesListComponent {
     { key: 'commune', label: 'Comuna' },
     { key: 'street', label: 'Calle' },
     { key: 'userId', label: 'ID Usuario' },
+    { key: 'userName', label: 'Nombre Usuario' },
     { key: 'purchaseProducts', label: 'Productos' },
   ];
+
+
 }

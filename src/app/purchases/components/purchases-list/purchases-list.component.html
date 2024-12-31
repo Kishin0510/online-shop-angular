@@ -56,9 +56,12 @@
           {{ purchase.userId }}
         </td>
         <td class="px-6 py-4">
+          {{ purchase.userName }}
+        </td>
+        <td class="px-6 py-4">
           <ul>
             <li *ngFor="let product of purchase.purchaseProducts">
-              {{ product.productId }}  ({{ product.quantity }})
+              {{ product.productName }}  ({{ product.quantity }})
             </li>
           </ul>
         </td>
