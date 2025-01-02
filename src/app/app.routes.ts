@@ -33,6 +33,10 @@ export const routes: Routes = [
     loadComponent: () => import('./purchases/pages/shopping-address-page/shopping-address-page.component').then((m) => m.ShoppingAddressPageComponent),
   },
   {
+    path: 'purchase-success',
+    loadComponent: () => import('./purchases/pages/purchase-success-page/purchase-success-page.component').then((m) => m.PurchaseSuccessPageComponent),
+  },
+  {
     path: 'admin',
     loadComponent: () => import('./admin/pages/admin-home-page/admin-home-page.component').then((m) => m.AdminHomePageComponent),
     canActivate: [authGuard], data: { role: ['Admin'] },

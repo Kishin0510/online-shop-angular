@@ -2,6 +2,7 @@ import { Component, inject, Input } from '@angular/core';
 import { Result } from '../../../_interfaces/usersDTO';
 import { UserService } from '../../../_services/user.service';
 import { Router } from '@angular/router';
+import { Gender } from '../../../_interfaces/user-auth';
 
 @Component({
   selector: 'app-user-list',
@@ -14,7 +15,7 @@ export class UserListComponent {
   @Input() users: Result[] = [];
   userService = inject(UserService);
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) { }
 
   protected readonly tableHeaders = [
     { key: 'id', label: 'ID' },

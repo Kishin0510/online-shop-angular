@@ -4,6 +4,7 @@ import { UserService } from '../../../_services/user.service';
 import { editPassword } from '../../../_interfaces/usersDTO';
 import { CommonModule } from '@angular/common';
 import { LocalStorageService } from '../../../_services/local-storage.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-edit-password-form',
@@ -19,7 +20,7 @@ export class EditPasswordFormComponent implements OnInit{
   userService = inject(UserService);
   LocalStorageService = inject(LocalStorageService);
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private router: Router) {}
 
   ngOnInit(): void {
     this.createForm();
@@ -49,6 +50,7 @@ export class EditPasswordFormComponent implements OnInit{
         this.error = false;
         this.errorMessage = [];
         console.log('Password editado con éxito', response);
+        this.router.navigate(['/edit']);
       }
       else {
         this.error = true;

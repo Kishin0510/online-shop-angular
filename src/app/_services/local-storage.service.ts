@@ -31,6 +31,7 @@ export class LocalStorageService {
     localStorage.removeItem(key);
   }
 
+
   updateLoginStatus(isLogged: boolean, isAdmin: boolean){
     this.loggedInSubject.next(isLogged);
     this.adminSubject.next(isAdmin);

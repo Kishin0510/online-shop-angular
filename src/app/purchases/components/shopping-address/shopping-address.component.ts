@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ShoppingCart } from '../../../_interfaces/shoppingCart';
 import { PurchasesService } from '../../../_services/purchases.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-shopping-address',
@@ -24,7 +25,7 @@ export class ShoppingAddressComponent implements OnInit {
   productsId: number[] = [];
   productsQuantity: number[] = [];
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private router: Router) {}
 
   ngOnInit(): void {
     this.createForm();
@@ -62,6 +63,7 @@ export class ShoppingAddressComponent implements OnInit {
       const response = await this.purchasesService.addPurchase(shoppingCart);
       if (response) {
         this.shoppingService.clearCart();
+        this.router.navigate(['/purchase-success']);
       }
 
     } catch (error: any) {
