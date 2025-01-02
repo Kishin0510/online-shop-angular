@@ -2,6 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LocalStorageService } from '../../../_services/local-storage.service';
 import { Router } from '@angular/router';
+import { ToastService } from '../../../_services/toast.service';
 
 @Component({
   selector: 'app-navbar',
@@ -14,6 +15,7 @@ export class NavbarComponent implements OnInit {
 
   currentPage: string;
   private LLService = inject(LocalStorageService);
+  private ToastService = inject(ToastService);
   isLogged: boolean = false;
   isAdmin: boolean = false;
 
@@ -39,6 +41,7 @@ export class NavbarComponent implements OnInit {
     this.LLService.removeValue('token');
     this.LLService.removeValue('user');
     this.LLService.updateLoginStatus(false, false);
+    this.ToastService.warning('Sesión cerrada');
     this.router.navigate(['/']);
   }
 }

@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../../../_services/product.service';
 import { Product, productType } from '../../../_interfaces/productDTO';
+import { ToastService } from '../../../_services/toast.service';
 
 
 @Component({
@@ -17,7 +18,8 @@ export class EditProductFormComponent implements OnInit {
   forms!: FormGroup;
   error: boolean = false;
   errorMessage: string[] = [];
-  productService = inject(ProductService);
+  private productService = inject(ProductService);
+  private toastService = inject(ToastService);
   product!: Product;
   selectedImage: boolean = false;
   productTypes: productType[] = [];
@@ -80,16 +82,18 @@ export class EditProductFormComponent implements OnInit {
       if(response) {
         this.error = false;
         this.errorMessage = [];
-        console.log('Producto editado con éxito', response);
+        this.toastService.succes('Producto editado con éxito');
         this.router.navigate(['/admin/products']);
       }
       else {
         this.error = true;
         this.errorMessage = this.productService.getErrors();
+        this.toastService.error('Error al editar el producto');
         console.log('Error al editar el producto:', this.errorMessage);
       }
     } catch (error: any) {
       console.error('Error al editar el producto:', error);
+      this.toastService.error('Error al editar el producto');
     }
   }
 

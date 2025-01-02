@@ -1,18 +1,23 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './_guards/auth.guard';
+import { noAuthGuard } from './_guards/no-auth.guard';
+import { unauthGuard } from './_guards/unauth.guard';
 
 export const routes: Routes = [
   {
     path: 'products',
     loadComponent: () => import('./products/pages/products-home-page/products-home-page.component').then((m) => m.ProductsHomePageComponent),
+    canActivate: [noAuthGuard],
   },
   {
     path: 'auth',
     loadComponent: () => import('./users/pages/login-page/login-page.component').then((m) => m.LoginPageComponent),
+    canActivate: [unauthGuard],
   },
   {
     path: 'register',
     loadComponent: () => import('./users/pages/register-page/register-page.component').then((m) => m.RegisterPageComponent),
+    canActivate: [unauthGuard],
   },
   {
     path: 'edit',
@@ -27,14 +32,17 @@ export const routes: Routes = [
   {
     path: 'cart',
     loadComponent: () => import('./purchases/pages/shopping-cart-page/shopping-cart-page.component').then((m) => m.ShoppingCartPageComponent),
+    canActivate: [noAuthGuard],
   },
   {
     path: 'shopping-address',
     loadComponent: () => import('./purchases/pages/shopping-address-page/shopping-address-page.component').then((m) => m.ShoppingAddressPageComponent),
+    canActivate: [authGuard], data: { role: ['User'] }
   },
   {
     path: 'purchase-success',
     loadComponent: () => import('./purchases/pages/purchase-success-page/purchase-success-page.component').then((m) => m.PurchaseSuccessPageComponent),
+    canActivate: [authGuard], data: { role: ['User'] }
   },
   {
     path: 'admin',

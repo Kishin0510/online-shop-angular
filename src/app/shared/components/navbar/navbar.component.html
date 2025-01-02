@@ -1,7 +1,8 @@
-<nav class="bg-green-400 flex items-center">
+<nav class="bg-green-400">
+<div class="flex items-center justify-between">
   <div class="flex items-start p-4 pl-10">
     <a href="/products" class="block rounded-full">
-      <img src="assets/images/logo.jpg" alt="logo" class="h-32 w-32 rounded-full" />
+      <img src="assets/images/logo.jpg" alt="logo" class="h-32 w-32 rounded-full hover:bg-blue-900" />
     </a>
   </div>
   <div *ngIf="!isLogged" class="space-x-4">
@@ -33,7 +34,8 @@
   </div>
   <div class="ml-auto flex items-center justify-end p-4 pr-10">
     <a href="/cart" class="block rounded-full">
-      <img src="assets/images/CarritoCompra.png" alt="cart" class="h-32 w-32 items-center rounded-full bg-gray-600" />
+      <img src="assets/images/CarritoCompra.png" alt="cart" class="h-32 w-32 items-center rounded-full bg-gray-600 hover:bg-blue-950" />
     </a>
   </div>
+</div>
 </nav>

@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { ProductService } from '../../../_services/product.service';
 import { productType } from '../../../_interfaces/productDTO';
 import { Router } from '@angular/router';
+import { ToastService } from '../../../_services/toast.service';
 
 @Component({
   selector: 'app-create-product',
@@ -16,7 +17,8 @@ export class CreateProductComponent implements OnInit {
   forms!: FormGroup;
   error: boolean = false;
   errorMessage: string[] = [];
-  productService = inject(ProductService);
+  private productService = inject(ProductService);
+  private ToastService = inject(ToastService);
   productTypes: productType[] = [];
   productTypesNames: string[] = [];
 
@@ -63,18 +65,20 @@ export class CreateProductComponent implements OnInit {
       if(response) {
         this.error = false;
         this.errorMessage = [];
-        console.log('Producto creado con éxito', response);
+        this.ToastService.succes('Producto creado con éxito');
         this.router.navigate(['/products']);
       }
       else {
         this.error = true;
         this.errorMessage = this.productService.getErrors();
+        this.ToastService.error('Error al crear el producto');
         console.log('Error al crear el producto:', this.errorMessage);
       }
 
     } catch (error: any) {
       this.error = true;
       this.errorMessage = error;
+      this.ToastService.error('Error al crear el producto');
       console.log('Error al crear el producto:', error);
     }
   }

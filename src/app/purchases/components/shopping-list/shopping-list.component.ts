@@ -3,18 +3,21 @@ import { ShoppingService } from '../../../_services/shopping.service'
 import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
+import { LocalStorageService } from '../../../_services/local-storage.service';
+import { ToastService } from '../../../_services/toast.service';
 
 @Component({
   selector: 'app-shopping-list',
   standalone: true,
   imports: [CommonModule],
-  providers: [ShoppingService],
   templateUrl: './shopping-list.component.html',
   styleUrl: './shopping-list.component.css'
 })
 export class ShoppingListComponent implements OnInit {
 
   private shoppingService = inject(ShoppingService);
+  private LocalStorageService = inject(LocalStorageService);
+  private ToastService = inject(ToastService);
   cartItems$ = this.shoppingService.cart$;
   totalPrice: number = 0;
   private subscription: Subscription = new Subscription();
@@ -46,6 +49,12 @@ export class ShoppingListComponent implements OnInit {
   }
 
   checkout() {
+    const token = this.LocalStorageService.getVariable('token');
+    if (!token) {
+      this.ToastService.warning('Debes iniciar sesión para continuar');
+      this.router.navigate(['/auth']);
+      return;
+    }
     this.router.navigate(['/shopping-address']);
   }
 
