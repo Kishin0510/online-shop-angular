@@ -20,7 +20,7 @@
     </div>
     <button (click)="logout()" class="bg-gray-600 hover:bg-blue-950 text-white font-bold py-2 px-4 rounded-lg">Cerrar Sesión</button>
   </div>
-  <div *ngIf="isAdmin">
+  <div *ngIf="isAdmin" class="pl-4 space-x-4">
     <a href="/admin/products">
       <button class="bg-gray-600 hover:bg-blue-950 text-white font-bold py-2 px-4 rounded-lg">Administrar Productos</button>
     </a>
@@ -32,7 +32,7 @@
     </a>
   </div>
   <div class="ml-auto flex items-center justify-end p-4 pr-10">
-    <a href="/" class="block rounded-full">
+    <a href="/cart" class="block rounded-full">
       <img src="assets/images/CarritoCompra.png" alt="cart" class="h-32 w-32 items-center rounded-full bg-gray-600" />
     </a>
   </div>

@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { authGuard } from './_guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -16,14 +17,25 @@ export const routes: Routes = [
   {
     path: 'edit',
     loadComponent: () => import('./users/pages/edit-user-page/edit-user-page.component').then((m) => m.EditUserPageComponent),
+    canActivate: [authGuard], data: { role: ['User', 'Admin'] }
   },
   {
     path: 'password',
     loadComponent: () => import('./users/pages/edit-password/edit-password.component').then((m) => m.EditPasswordComponent),
+    canActivate: [authGuard], data: { role: ['User', 'Admin'] }
+  },
+  {
+    path: 'cart',
+    loadComponent: () => import('./purchases/pages/shopping-cart-page/shopping-cart-page.component').then((m) => m.ShoppingCartPageComponent),
+  },
+  {
+    path: 'shopping-address',
+    loadComponent: () => import('./purchases/pages/shopping-address-page/shopping-address-page.component').then((m) => m.ShoppingAddressPageComponent),
   },
   {
     path: 'admin',
     loadComponent: () => import('./admin/pages/admin-home-page/admin-home-page.component').then((m) => m.AdminHomePageComponent),
+    canActivate: [authGuard], data: { role: ['Admin'] },
     children: [
       {
         path: 'create',

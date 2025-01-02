@@ -3,6 +3,7 @@ import { environment } from '../../environments/environtment.development';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import { ResponseAPIGetPurchases } from '../_interfaces/purchaseDTO';
+import { ShoppingCart } from '../_interfaces/shoppingCart';
 
 @Injectable({
   providedIn: 'root'
@@ -32,6 +33,21 @@ export class PurchasesService {
       return Promise.resolve(response);
     } catch (error) {
       console.error("Error obteniendo compras", error);
+      let e = error as HttpErrorResponse;
+      this.errors.push(e.message);
+      return Promise.reject(e);
+    }
+  }
+
+  async addPurchase(shoppingCart: ShoppingCart): Promise<string> {
+    try {
+      const response = await firstValueFrom(this.http.post<string>(`${this.baseUrl}/purchase`, shoppingCart,
+        { headers: {}, responseType: 'text' as 'json'}
+      ));
+      console.log("Compra en service, response:", response);
+      return Promise.resolve(response);
+    } catch (error) {
+      console.error("Error agregando compra", error);
       let e = error as HttpErrorResponse;
       this.errors.push(e.message);
       return Promise.reject(e);

@@ -10,7 +10,6 @@ import { Router } from '@angular/router';
   selector: 'app-login-form',
   standalone: true,
   imports: [ReactiveFormsModule, CommonModule, HttpClientModule],
-  providers: [AuthService, LocalStorageService],
   templateUrl: './login-form.component.html',
   styleUrl: './login-form.component.css'
 })
@@ -55,9 +54,13 @@ export class LoginFormComponent {
       if (response.token){
         this.LocalStorageService.setVariable('token', response.token);
         this.LocalStorageService.setVariable('user', response.user);
+        this.LocalStorageService.updateLoginStatus(true, response.user.rol?.id === 1);
         console.log('Usuarios logueado:', this.LocalStorageService.getVariable('user'));
-
-        this.router.navigate(['/']);
+        if (response.user.rol.id === 1) {
+          this.router.navigate(['/admin/products']);
+        } else {
+          this.router.navigate(['/']);
+        }
       } else {
         console.log('Error en login', response);
         this.error = true;
