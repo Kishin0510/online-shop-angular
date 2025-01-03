@@ -7,6 +7,11 @@ import { LocalStorageService } from '../../../_services/local-storage.service';
 import { Router } from '@angular/router';
 import { ToastService } from '../../../_services/toast.service';
 
+/**
+ * Componente para el formulario de inicio de sesión.
+ *
+ * Este componente muestra un formulario para que los usuarios inicien sesión.
+ */
 @Component({
   selector: 'app-login-form',
   standalone: true,
@@ -15,19 +20,43 @@ import { ToastService } from '../../../_services/toast.service';
   styleUrl: './login-form.component.css'
 })
 export class LoginFormComponent {
+  /**
+   * Formulario reactivo para iniciar sesión.
+   */
   form!: FormGroup;
+  /**
+   * Indica si hay una alerta de inicio de sesión.
+   */
   loginAlert: boolean = false;
+  /**
+   * Mensajes de error.
+   */
   error: boolean = false;
+  /**
+   * Mensajes de error.
+   */
   errorMessage: string[] = [];
 
+  /**
+   * Servicio de autenticación.
+   */
   private AuthService = inject(AuthService);
+  /**
+   * Servicio de almacenamiento local.
+   */
   private LocalStorageService = inject(LocalStorageService);
+  /**
+   * Servicio de notificaciones emergentes.
+   */
   private ToastService = inject(ToastService);
 
   constructor(private fb: FormBuilder, private router: Router) {
     this.loginForm();
   }
 
+  /**
+   * Crea el formulario reactivo para el inicio de sesión.
+   */
   loginForm() {
     this.form = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -43,6 +72,9 @@ export class LoginFormComponent {
     return this.form.get('password')?.invalid && this.form.get('password')?.touched;
   }
 
+  /**
+   * Maneja el envío del formulario de inicio de sesión.
+   */
   async login() {
     if (this.form.invalid) {
       Object.values(this.form.controls).forEach(control => {

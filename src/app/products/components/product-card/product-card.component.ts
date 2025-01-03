@@ -4,6 +4,11 @@ import { Product } from '../../../_interfaces/productDTO';
 import { ShoppingService } from '../../../_services/shopping.service';
 import { CartItem } from '../../../_interfaces/shoppingCart';
 
+/**
+ * Maneja el evento de clic en el botón.
+ *
+ * Emite el evento `clickButton` con la acción de paginación.
+ */
 @Component({
   selector: 'app-product-card',
   standalone: true,
@@ -12,10 +17,21 @@ import { CartItem } from '../../../_interfaces/shoppingCart';
   styleUrl: './product-card.component.css'
 })
 export class ProductCardComponent {
+  /**
+   * Producto a mostrar.
+   */
   @Input() product!: Product;
 
+  /**
+   * Servicio de compras para manejar el carrito de compras.
+   */
   shoppingService = inject(ShoppingService);
 
+  /**
+   * Agrega el producto al carrito de compras.
+   *
+   * @param product - El producto a agregar al carrito.
+   */
   addToCart(product: Product) {
     const cartItem: CartItem = {
       productId: product.id,

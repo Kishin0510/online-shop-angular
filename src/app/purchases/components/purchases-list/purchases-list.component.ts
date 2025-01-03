@@ -3,6 +3,11 @@ import { ResponseAPIGetPurchases, PurchaseProduct } from '../../../_interfaces/p
 import { CommonModule } from '@angular/common';
 import { Product } from '../../../_interfaces/productDTO';
 
+/**
+ * Componente para mostrar una lista de compras.
+ *
+ * Este componente muestra una tabla con la lista de compras realizadas por los usuarios.
+ */
 @Component({
   selector: 'app-purchases-list',
   standalone: true,
@@ -11,10 +16,22 @@ import { Product } from '../../../_interfaces/productDTO';
   styleUrl: './purchases-list.component.css'
 })
 export class PurchasesListComponent {
+  /**
+   * Lista de compras a mostrar.
+   */
   @Input() purchases: ResponseAPIGetPurchases[] = [];
+  /**
+   * Lista de productos de las compras.
+   */
   @Input() purchaseProducts: PurchaseProduct[] = [];
+  /**
+   * Lista de productos a mostrar.
+   */
   @Input() products: Product[] = [];
 
+  /**
+   * Encabezados de la tabla de compras.
+   */
   protected readonly tableHeaders = [
     { key: 'id', label: 'ID' },
     { key: 'purchaseDate', label: 'Fecha' },

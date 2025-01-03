@@ -4,14 +4,35 @@ import { Product, ResponseAPIGetProduct, productType } from '../_interfaces/prod
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 
+/**
+ * Servicio de productos para manejar la obtención y creación de productos.
+ */
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
+
+  /**
+   * URL base de la API.
+   */
   private baseUrl: string = environment.apiUrl;
+  /**
+   * Lista de errores.
+   */
   public errors: string[] = [];
+  /**
+   * Cliente HTTP.
+   */
   private http = inject(HttpClient);
 
+  /**
+   * Obtiene todos los productos disponibles.
+   * @param query - Parámetro de búsqueda.
+   * @param order - Parámetro de ordenamiento.
+   * @param pageNum - Número de página.
+   * @param pagSize - Tamaño de página.
+   * @returns Una promesa que resuelve con la respuesta de la API o rechaza con un error.
+   */
   async getAllProducts(query: string, order: string ,pageNum: number,pagSize: number ): Promise<ResponseAPIGetProduct> {
     try {
       const queryParam = new HttpParams().set('query', query).set('order', order);
@@ -26,6 +47,13 @@ export class ProductService {
     }
   }
 
+  /**
+   * Obtiene todos los productos.
+   * @param query - Parámetro de búsqueda.
+   * @param pageNum - Número de página.
+   * @param pagSize - Tamaño de página.
+   * @returns Una promesa que resuelve con la respuesta de la API o rechaza con un error
+   */
   async getAllProductData(query: string, pageNum: number, pagSize: number): Promise<ResponseAPIGetProduct> {
     try {
       const queryParam = new HttpParams().set('query', query);
@@ -39,6 +67,11 @@ export class ProductService {
     }
   }
 
+  /**
+   * Crea un nuevo producto.
+   * @param product - Objeto que contiene la información del producto a crear.
+   * @returns Una promesa que resuelve con la respuesta de la API o rechaza con un error.
+   */
   async createProduct(product: FormData): Promise<string>{
     try {
       const response = await firstValueFrom(this.http.post<string>(`${this.baseUrl}/product`, product, {
@@ -57,6 +90,12 @@ export class ProductService {
       return Promise.reject(error);
     }
   }
+
+  /**
+   * Elimina un producto.
+   * @param id - ID del producto a eliminar.
+   * @returns Una promesa que resuelve con la respuesta de la API o rechaza con un error.
+   */
   async editProduct(id: number, editedProduct: FormData): Promise<string> {
     try {
       const response = await firstValueFrom(this.http.put<string>(`${this.baseUrl}/product/${id}`, editedProduct, {
@@ -74,6 +113,12 @@ export class ProductService {
       return Promise.reject(error);
     }
   }
+
+  /**
+   * Elimina un producto.
+   * @param id - ID del producto a eliminar.
+   * @returns Una promesa que resuelve con la respuesta de la API o rechaza con un error.
+   */
   async getProductById(id: number): Promise<Product> {
     try {
       const response = await firstValueFrom(this.http.get<Product>(`${this.baseUrl}/product/${id}`));
@@ -87,6 +132,10 @@ export class ProductService {
     }
   }
 
+  /**
+   * Obtiene los tipos de producto.
+   * @returns Una promesa que resuelve con la respuesta de la API o rechaza con un error
+   */
   async getProductTypes(): Promise<productType[]> {
     try {
       const response = await firstValueFrom(this.http.get<productType[]>(`${this.baseUrl}/product/types`));
@@ -100,6 +149,10 @@ export class ProductService {
     }
   }
 
+  /**
+   * Obtiene los errores.
+   * @returns Una lista de errores.
+   */
   getErrors(): string[] {
     return this.errors;
   }

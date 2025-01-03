@@ -6,6 +6,11 @@ import { productType } from '../../../_interfaces/productDTO';
 import { Router } from '@angular/router';
 import { ToastService } from '../../../_services/toast.service';
 
+/**
+ * Componente para crear un nuevo producto.
+ *
+ * Este componente muestra un formulario para crear un nuevo producto y manejar la lógica de creación.
+ */
 @Component({
   selector: 'app-create-product',
   standalone: true,
@@ -14,21 +19,54 @@ import { ToastService } from '../../../_services/toast.service';
   styleUrl: './create-product.component.css'
 })
 export class CreateProductComponent implements OnInit {
+  /**
+   * Formulario para crear un nuevo producto.
+   */
   forms!: FormGroup;
+
+  /**
+   * Indica si ocurrió un error al crear el producto.
+   */
   error: boolean = false;
+
+  /**
+   * MensajeS de error al crear el producto.
+   */
   errorMessage: string[] = [];
+
+  /**
+   * Servicio de productos.
+   */
   private productService = inject(ProductService);
+
+  /**
+   * Servicio de notificaciones.
+   */
   private ToastService = inject(ToastService);
+
+  /**
+   * Tipos de producto.
+   */
   productTypes: productType[] = [];
+
+  /**
+   * Nombres de los tipos de producto.
+   */
   productTypesNames: string[] = [];
 
   constructor(private fb: FormBuilder, private router: Router) {}
 
+  /**
+   * Inicializa el componente y carga los datos necesarios.
+   */
   ngOnInit(): void {
     this.createForm();
     this.getProductTypes();
   }
 
+  /**
+   * Crea el formulario reactivo para crear el producto.
+   */
   createForm() {
     this.forms = this.fb.group({
       name: ['', Validators.required],
@@ -39,6 +77,9 @@ export class CreateProductComponent implements OnInit {
     });
   }
 
+  /**
+   * Obtiene los tipos de productos desde el servicio.
+   */
   getProductTypes() {
     this.productService.getProductTypes().then((response) => {
       this.productTypes = response;
@@ -47,6 +88,9 @@ export class CreateProductComponent implements OnInit {
     });
   }
 
+  /**
+   * Maneja el envío del formulario para crear el producto.
+   */
   async onSubmit() {
     if (this.forms.invalid) return;
     try {

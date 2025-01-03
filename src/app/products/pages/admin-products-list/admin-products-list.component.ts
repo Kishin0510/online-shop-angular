@@ -6,7 +6,11 @@ import { SearchButtonComponent } from '../../components/search-button/search-but
 import { PageButtonComponent } from '../../components/page-button/page-button.component';
 import { AddProductButtonComponent } from '../../components/add-product-button/add-product-button.component';
 
-
+/**
+ * Componente para la lista de productos en la vista de administración.
+ *
+ * Este componente muestra una lista de productos con opciones para buscar, paginar y agregar nuevos productos.
+ */
 @Component({
   selector: 'app-admin-products-list',
   standalone: true,
@@ -16,17 +20,38 @@ import { AddProductButtonComponent } from '../../components/add-product-button/a
 })
 export class AdminProductsListComponent implements OnInit {
 
+  /**
+   * Página actual de la lista de productos.
+   */
   currentPage = 1;
+
+  /**
+   * Última página de la lista de productos.
+   */
   lastPage = 1;
+
+  /**
+   * Término de búsqueda para filtrar la lista de productos.
+   */
   searchName = '';
+
+  /**
+   * Lista de productos a mostrar.
+   */
   protected products: Product[] = [];
 
   constructor(private productService: ProductService) { }
 
+  /**
+   * Inicializa el componente y carga los productos.
+   */
   ngOnInit(): void {
     this.getProducts();
   }
 
+  /**
+   * Obtiene la lista de productos desde el servicio.
+   */
   getProducts(): void {
     this.productService.getAllProductData(this.searchName, this.currentPage, 50).then((response) => {
       if(response.result.length != 0) {
@@ -41,12 +66,22 @@ export class AdminProductsListComponent implements OnInit {
     });
   }
 
+  /**
+   * Maneja el evento de búsqueda de productos.
+   *
+   * @param query - La query de búsqueda.
+   */
   searchQuery(query: string): void {
     this.searchName = query;
     this.currentPage = 1;
     this.getProducts();
   }
 
+  /**
+   * Cambia la página de la lista de productos.
+   *
+   * @param direction - La dirección de la página a cambiar.
+   */
   changePage(direction: 'next' | 'prev'): void {
     if (direction === 'next') {
       this.currentPage++;

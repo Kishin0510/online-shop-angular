@@ -6,6 +6,11 @@ import { CommonModule } from '@angular/common';
 import { LocalStorageService } from '../../../_services/local-storage.service';
 import { Router } from '@angular/router';
 
+/**
+ * Componente para el formulario de edición de contraseña.
+ *
+ * Este componente muestra un formulario para cambiar la contraseña del usuario.
+ */
 @Component({
   selector: 'app-edit-password-form',
   standalone: true,
@@ -14,18 +19,38 @@ import { Router } from '@angular/router';
   styleUrl: './edit-password-form.component.css'
 })
 export class EditPasswordFormComponent implements OnInit{
+  /**
+   * Formulario reactivo para cambiar la contraseña.
+   */
   forms!: FormGroup;
+  /**
+   * Indica si hay un error en el formulario.
+   */
   error: boolean = false;
+  /**
+   * Mensajes de error.
+   */
   errorMessage: string[] = [];
+  /**
+   * Servicio para manejar la lógica de usuarios.
+   */
   userService = inject(UserService);
+  /**
+   * Servicio de almacenamiento local.
+   */
   LocalStorageService = inject(LocalStorageService);
 
   constructor(private fb: FormBuilder, private router: Router) {}
 
+  /**
+   * Inicializa el componente y crea el formulario.
+   */
   ngOnInit(): void {
     this.createForm();
   }
-
+  /**
+   * Crea el formulario reactivo para cambiar la contraseña.
+   */
   createForm() {
     this.forms = this.fb.group({
       oldpassword: ['', Validators.required],
@@ -33,7 +58,9 @@ export class EditPasswordFormComponent implements OnInit{
       Confirmnewpassword: ['', Validators.required],
     });
   }
-
+  /**
+   * Maneja el envío del formulario para cambiar la contraseña.
+   */
   async onSubmit() {
     if (this.forms.invalid) return;
     try {

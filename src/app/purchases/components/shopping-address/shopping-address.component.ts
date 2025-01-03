@@ -7,6 +7,11 @@ import { ShoppingCart } from '../../../_interfaces/shoppingCart';
 import { PurchasesService } from '../../../_services/purchases.service';
 import { Router } from '@angular/router';
 
+/**
+ * Componente para manejar la dirección de envío en el proceso de compra.
+ *
+ * Este componente muestra un formulario para ingresar la dirección de envío y manejar la lógica de la compra.
+ */
 @Component({
   selector: 'app-shopping-address',
   standalone: true,
@@ -15,24 +20,52 @@ import { Router } from '@angular/router';
   styleUrl: './shopping-address.component.css'
 })
 export class ShoppingAddressComponent implements OnInit {
+  /**
+   * Servicio de compras para manejar el carrito de compras.
+   */
   private shoppingService = inject(ShoppingService);
+  /**
+   * Servicio de compras para manejar las compras.
+   */
   private purchasesService = inject(PurchasesService);
+  /**
+   * Observable para obtener los ítems del carrito de compras.
+   */
   cartItems$ = this.shoppingService.cart$;
-
+  /**
+   * Formulario reactivo para ingresar la dirección de envío.
+   */
   forms!: FormGroup;
+  /**
+   * Indica si hay un error en el formulario.
+   */
   error: boolean = false;
+  /**
+   * Mensajes de error.
+   */
   errorMessage: string[] = [];
+  /**
+   * IDs de los productos en el carrito.
+   */
   productsId: number[] = [];
+  /**
+   * Cantidades de los productos en el carrito.
+   */
   productsQuantity: number[] = [];
 
   constructor(private fb: FormBuilder, private router: Router) {}
-
+  /**
+   * Inicializa el componente, crea el formulario y llama a la función "storeProductDetails".
+   */
   ngOnInit(): void {
     this.createForm();
     this.storeProductDetails();
     console.log('Productos en carrito:', this.productsId);
   }
 
+  /**
+   * Crea el formulario reactivo para ingresar la dirección de envío.
+   */
   createForm() {
     this.forms = this.fb.group({
       Country: ['', Validators.required],
@@ -42,6 +75,9 @@ export class ShoppingAddressComponent implements OnInit {
     });
   }
 
+  /**
+   * Obtiene los detalles de los productos en el carrito.
+   */
   storeProductDetails() {
     this.cartItems$.subscribe(items => {
       this.productsId = items.map(item => item.productId);
@@ -49,6 +85,9 @@ export class ShoppingAddressComponent implements OnInit {
     }).unsubscribe();
   }
 
+  /**
+   * Maneja el envío del formulario para completar la compra.
+   */
   async onSubmit() {
     if (this.forms.invalid) return;
     try {

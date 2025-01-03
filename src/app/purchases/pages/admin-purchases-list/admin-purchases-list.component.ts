@@ -4,7 +4,11 @@ import { PurchasesService } from '../../../_services/purchases.service';
 import { PurchasesListComponent } from '../../components/purchases-list/purchases-list.component';
 import { SearchPurchaseButtonComponent } from '../../components/search-purchase-button/search-purchase-button.component';
 
-
+/**
+ * Componente para la lista de compras en la vista de administración.
+ *
+ * Este componente muestra una lista de compras con opciones para buscar.
+ */
 @Component({
   selector: 'app-admin-purchases-list',
   standalone: true,
@@ -14,38 +18,46 @@ import { SearchPurchaseButtonComponent } from '../../components/search-purchase-
 })
 export class AdminPurchasesListComponent implements OnInit {
 
+  /**
+   * Página actual de la lista de compras.
+   */
   currentPage = 1;
+  /**
+   * Página anterior de la lista de compras.
+   */
   lastPage = 1;
+  /**
+   * Término de búsqueda para filtrar la lista de compras.
+   */
   searchName = '';
+  /**
+   * Fecha de búsqueda para filtrar la lista de compras.
+   */
   searchDate =  '';
+  /**
+   *  Lista de compras a mostrar.
+   */
   protected purchases: ResponseAPIGetPurchases[] = [];
+  /**
+   * Lista de productos de las compras.
+   */
   protected purchaseProducts: PurchaseProduct[] = [];
+
   constructor(private purchasesService: PurchasesService) { }
 
+  /**
+   * Inicializa el componente y carga las compras.
+   */
   ngOnInit(): void {
     this.searchQuery(this.searchName, this.searchDate);
   }
-  getPurchases(): void {
-    this.purchasesService.getAllPurchases(this.currentPage, 100).then((response) => {
-      if(response.length != 0) {
-        this.purchases = [];
-        for (let i = 0; i < response.length; i++) {
-          this.purchases.push(response[i]);
-          for (let j = 0; j < response[i].purchaseProducts.length; j++) {
-            this.purchaseProducts.push(response[i].purchaseProducts[j]);
-          }
-        }
-        console.log(this.purchases);
-      } else {
-        this.lastPage = this.currentPage - 1;
-        this.currentPage = this.lastPage;
-      }
-    }).catch((error) => {
-      console.error("Error obteniendo productos", error);
-    });
-  }
 
-
+  /**
+   * Maneja la búsqueda de compras.
+   *
+   * @param searchTerm - El término de búsqueda ingresado por el usuario.
+   * @param searchDate - La fecha de búsqueda ingresada por el usuario.
+   */
   searchQuery(name: string, date: string): void {
     this.searchName = name;
     this.searchDate = date;
@@ -71,12 +83,4 @@ export class AdminPurchasesListComponent implements OnInit {
     this.searchQuery(event.term, event.date);
   }
 
-  changePage(direction: 'next' | 'prev'): void {
-    if (direction === 'next') {
-      this.currentPage++;
-    } else if (direction === 'prev' && this.currentPage > 1) {
-      this.currentPage--;
-    }
-    this.getPurchases();
-  }
 }

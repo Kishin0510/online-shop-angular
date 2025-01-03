@@ -6,6 +6,11 @@ import { CommonModule } from '@angular/common';
 import { LocalStorageService } from '../../../_services/local-storage.service';
 import { Router } from '@angular/router';
 
+/**
+ * Componente para el formulario de edición de usuario.
+ *
+ * Este componente muestra un formulario para editar la información del usuario.
+ */
 @Component({
   selector: 'app-edit-user-form',
   standalone: true,
@@ -14,23 +19,62 @@ import { Router } from '@angular/router';
   styleUrl: './edit-user-form.component.css'
 })
 export class EditUserFormComponent implements OnInit {
-  forms!: FormGroup;
+  /**
+   * Formulario reactivo para editar la información del usuario.
+   */
+  forms!: FormGroup
+  /**
+   * Indica si hay un error en el formulario.
+   */
   error: boolean = false;
+  /**
+   * Mensajes de error.
+   */
   errorMessage: string[] = [];
+  /**
+   * Servicio para manejar la lógica de usuarios.
+   */
   userService = inject(UserService);
+  /**
+   * Servicio de almacenamiento local.
+   */
   LocalStorageService = inject(LocalStorageService);
 
+  /**
+   * Lista de géneros disponibles.
+   */
   genders: Gender[] = [];
+  /**
+   * Nombres de los géneros disponibles.
+   */
   genderNames: string[] = [];
 
+  /**
+   * Rut del usuario.
+   */
   userRut = this.LocalStorageService.getVariable('user').rut;
+  /**
+   * Correo del usuario.
+   */
   userEmail = this.LocalStorageService.getVariable('user').email;
+  /**
+   * Nombre del usuario.
+   */
   userName = this.LocalStorageService.getVariable('user').name;
+  /**
+   * Fecha de nacimiento del usuario.
+   */
   userBirthdate = this.LocalStorageService.getVariable('user').birthdate;
+  /**
+   * Género del usuario.
+   */
   userGender = this.LocalStorageService.getVariable('user').gender.type;
 
   constructor(private fb: FormBuilder, private router: Router) {}
 
+  /**
+   * Inicializa el componente y crea el formulario.
+   */
   ngOnInit(): void {
     this.createForm();
     this.userService.getGenders().then(genders => {
@@ -38,7 +82,9 @@ export class EditUserFormComponent implements OnInit {
       this.genderNames = genders.map(gender => gender.type);
     });
   }
-
+  /**
+   * Crea el formulario reactivo para editar la información del usuario.
+   */
   createForm() {
     this.forms = this.fb.group({
       name: [this.userName, Validators.required],
@@ -46,7 +92,9 @@ export class EditUserFormComponent implements OnInit {
       gender: [this.userGender, Validators.required],
     });
   }
-
+  /**
+   * Maneja el envío del formulario para editar la información del usuario.
+   */
   async onSubmit() {
     if (this.forms.invalid) return;
     try {

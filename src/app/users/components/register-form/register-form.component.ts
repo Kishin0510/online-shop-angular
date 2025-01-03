@@ -8,6 +8,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { LocalStorageService } from '../../../_services/local-storage.service';
 import { Router } from '@angular/router';
 
+/**
+ * Componente para el formulario de registro de usuario.
+ *
+ * Este componente muestra un formulario para que los usuarios se registren.
+ */
 @Component({
   selector: 'app-register-form',
   standalone: true,
@@ -17,18 +22,39 @@ import { Router } from '@angular/router';
   styleUrl: './register-form.component.css'
 })
 export class RegisterFormComponent {
+  /**
+   * Formulario reactivo para el registro de usuario.
+   */
   form!: FormGroup;
+  /**
+   * Indica si hay un error al registrarse.
+   */
   registerAlert: boolean = false;
+  /**
+   * Indica si hay un error en el formulario.
+   */
   error: boolean = false;
+  /**
+   * Mensajes de error.
+   */
   errorMessage: string[] = [];
 
+  /**
+   * Servicio de autenticación.
+   */
   private AuthService = inject(AuthService);
+  /**
+   * Servicio de almacenamiento local.
+   */
   private LocalStorageService = inject(LocalStorageService);
 
   constructor(private fb: FormBuilder, private router: Router) {
     this.registerForm();
   }
 
+  /**
+   * Crea el formulario reactivo para el registro de usuario.
+   */
   registerForm() {
     this.form = this.fb.group({
       rut: ['', Validators.required],
@@ -69,6 +95,9 @@ export class RegisterFormComponent {
     return this.form.get('ConfirmPassword')?.invalid && this.form.get('ConfirmPassword')?.touched;
   }
 
+  /**
+   * Registra un usuario en la base de datos si esta todo bien.
+   */
   async register() {
     if (this.form.invalid) return;
     try {

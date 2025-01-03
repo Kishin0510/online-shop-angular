@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { ShoppingListComponent } from '../../components/shopping-list/shopping-list.component';
 
+/**
+ * Componente para la página del carrito de compras.
+ */
 @Component({
   selector: 'app-shopping-cart-page',
   standalone: true,

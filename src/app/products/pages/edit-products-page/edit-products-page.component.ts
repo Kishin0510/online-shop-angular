@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { EditProductFormComponent } from '../../components/edit-product-form/edit-product-form.component';
-import { ActivatedRoute, Router } from '@angular/router';
 
+/**
+ * Componente para la página de edición de productos
+ */
 @Component({
   selector: 'app-edit-products-page',
   standalone: true,
