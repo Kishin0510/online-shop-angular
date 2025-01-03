@@ -141,7 +141,7 @@ export class UserService {
    */
   async deleteUser(id: number): Promise<string> {
     try {
-      const response = await firstValueFrom(this.http.delete<string>(`${this.baseUrl}/user/delete/${id}`));
+      const response = await firstValueFrom(this.http.delete<string>(`${this.baseUrl}/user/delete/${id}`, { responseType: 'text' as 'json' }));
       console.log('Usuario eliminado con éxito', response);
       return Promise.resolve(response);
     } catch (error) {

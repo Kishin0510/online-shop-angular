@@ -5,6 +5,7 @@ import { editUser, Gender } from '../../../_interfaces/user-auth';
 import { CommonModule } from '@angular/common';
 import { LocalStorageService } from '../../../_services/local-storage.service';
 import { Router } from '@angular/router';
+import { UserDeleteButtonComponent } from '../user-delete-button/user-delete-button.component';
 
 /**
  * Componente para el formulario de edición de usuario.
@@ -14,7 +15,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-edit-user-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, UserDeleteButtonComponent],
   templateUrl: './edit-user-form.component.html',
   styleUrl: './edit-user-form.component.css'
 })
@@ -69,6 +70,11 @@ export class EditUserFormComponent implements OnInit {
    * Género del usuario.
    */
   userGender = this.LocalStorageService.getVariable('user').gender.type;
+
+  /**
+   * ID del rol del usuario.
+   */
+  userRolID = this.LocalStorageService.getVariable('user').rol.id;
 
   constructor(private fb: FormBuilder, private router: Router) {}
 
