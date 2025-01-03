@@ -56,9 +56,13 @@ export class AuthService {
       console.log('Usuario en service, response:', response);
       return Promise.resolve(response);
      } catch (error) {
-
       console.error('Error creando el usuario', error);
       let e = error as HttpErrorResponse;
+      if (e.status === 400 && e.error.errors) {
+        this.errors = Object.keys(e.error.errors).map(field => {
+          return `${field}: ${e.error.errors[field].join(', ')}`;
+        });
+      }
       this.errors.push(e.message || 'Error desconocido');
       return Promise.reject(this.errors);
      }

@@ -76,6 +76,22 @@ export class ShoppingAddressComponent implements OnInit {
   }
 
   /**
+   * Verifica si los campos del formulario son válidos y han sido tocados.
+   */
+  get countryValidated(){
+    return this.forms.get('Country')?.invalid && this.forms.get('Country')?.touched;
+  }
+  get cityValidated(){
+    return this.forms.get('City')?.invalid && this.forms.get('City')?.touched;
+  }
+  get communeValidated(){
+    return this.forms.get('Commune')?.invalid && this.forms.get('Commune')?.touched;
+  }
+  get streetValidated(){
+    return this.forms.get('Street')?.invalid && this.forms.get('Street')?.touched;
+  }
+
+  /**
    * Obtiene los detalles de los productos en el carrito.
    */
   storeProductDetails() {
