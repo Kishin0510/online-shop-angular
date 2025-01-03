@@ -27,3 +27,8 @@ export interface addProduct {
   Image:        File;
   ProductTypeId: number;
 }
+
+export interface productType {
+  id:   number;
+  type: string;
+}

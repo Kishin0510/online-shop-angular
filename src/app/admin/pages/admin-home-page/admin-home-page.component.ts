@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
+/**
+ * Componente de la página de inicio del administrador.
+ */
 @Component({
   selector: 'app-admin-home-page',
   standalone: true,

@@ -5,12 +5,14 @@ import { routes } from './app.routes';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { jwtInterceptor } from './_interceptors/jwt.interceptor';
 import { ToastService } from './_services/toast.service';
+import { ShoppingService } from './_services/shopping.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideHttpClient(withFetch(), withInterceptors([jwtInterceptor])),
+    ShoppingService,
     ToastService,
   ],
 };
