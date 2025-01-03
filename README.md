@@ -1,6 +1,7 @@
 # OnlineShopAngular
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.12.
+Es necesario tener instalado Node.js y Node Package Manager (npm)
 
 ## Taller Tienda UCN 
   La Tienda UCN busca implementar un e-commerce para satisfacer las necesidades y expectativas de todos sus clientes.
