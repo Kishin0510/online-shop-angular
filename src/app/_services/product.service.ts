@@ -92,8 +92,8 @@ export class ProductService {
   }
 
   /**
-   * Elimina un producto.
-   * @param id - ID del producto a eliminar.
+   * Edita un producto.
+   * @param id - ID del producto a editar.
    * @returns Una promesa que resuelve con la respuesta de la API o rechaza con un error.
    */
   async editProduct(id: number, editedProduct: FormData): Promise<string> {
@@ -115,8 +115,8 @@ export class ProductService {
   }
 
   /**
-   * Elimina un producto.
-   * @param id - ID del producto a eliminar.
+   * Obtiene un producto por su id.
+   * @param id - ID del producto.
    * @returns Una promesa que resuelve con la respuesta de la API o rechaza con un error.
    */
   async getProductById(id: number): Promise<Product> {
