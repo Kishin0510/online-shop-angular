@@ -43,8 +43,7 @@ export class UserDeleteButtonComponent {
       const response = await this.userService.deleteUser(this.localStorageService.getVariable('user').id)
       console.log(response);
       if (response) {
-        this.localStorageService.removeValue('user');
-        this.localStorageService.removeValue('token');
+        this.localStorageService.updateLoginStatus(false,false);
         this.toastService.succes('Usuario eliminado correctamente');
         this.router.navigate(['/login']);
       }
