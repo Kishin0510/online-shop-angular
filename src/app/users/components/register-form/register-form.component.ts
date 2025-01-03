@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { addUser } from '../../../_interfaces/usersDTO';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { AuthService } from '../../../_services/auth.service';
 import { ResponseAPIRegister } from '../../../_interfaces/user-auth';
 import { HttpClientModule } from '@angular/common/http';
@@ -38,7 +38,6 @@ export class RegisterFormComponent {
    * Mensajes de error.
    */
   errorMessage: string[] = [];
-
   /**
    * Servicio de autenticación.
    */
@@ -70,7 +69,6 @@ export class RegisterFormComponent {
   get rutValidate() {
     return this.form.get('rut')?.invalid && this.form.get('rut')?.touched;
   }
-
   get nameValidate() {
     return this.form.get('name')?.invalid && this.form.get('name')?.touched;
   }
@@ -99,6 +97,14 @@ export class RegisterFormComponent {
    * Registra un usuario en la base de datos si esta todo bien.
    */
   async register() {
+    this.error = false;
+    this.errorMessage = [];
+    Object.keys(this.form.controls).forEach(field => {
+    const control = this.form.get(field);
+    if (control) {
+      control.setErrors(null);
+    }
+    });
     if (this.form.invalid) return;
     try {
       const user: addUser = {
@@ -111,7 +117,6 @@ export class RegisterFormComponent {
         ConfirmPassword: this.form.value.ConfirmPassword,
        }
       const response = await this.AuthService.registerUser(user);
-
       if (response.token){
         this.LocalStorageService.setVariable('token', response.token);
         this.LocalStorageService.setVariable('user', response.user);
@@ -120,11 +125,20 @@ export class RegisterFormComponent {
         this.router.navigate(['/']);
       } else {
         console.log('Error en registro', response);
-        this.error = true;
       }
     } catch (error: any) {
       this.error = true;
-      this.errorMessage.push(error);
+      this.errorMessage = error;
+      error.forEach((err: string) => {
+        const field = err.split(':')[0];
+        const message = err.split(':')[1];
+
+        const formControl = this.form.get(field);
+
+        if (formControl) {
+          formControl.setErrors({ serverError: message.trim() });
+        } 
+      });
     }
   }
 }

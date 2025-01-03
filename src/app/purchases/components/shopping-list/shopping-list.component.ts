@@ -111,7 +111,11 @@ export class ShoppingListComponent implements OnInit {
       this.router.navigate(['/auth']);
       return;
     }
+    if (this.productsId.length === 0) {
+      this.ToastService.error('Tu carrito está vacío. Agrega productos antes de proceder con la compra.');
+      return;
+    }
     this.router.navigate(['/shopping-address']);
-  }
+}
 
 }

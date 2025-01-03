@@ -5,18 +5,38 @@
     <div class="relative z-0 w-full mb-5 group mt-10">
       <input formControlName="Country" type="text" name="Country" id="Country" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
       <label for="Country" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">País</label>
+      <div class="h-[20px]">
+        <small *ngIf="forms.get('Country')?.touched && forms.get('Country')?.invalid" class="text-red-500 font-medium">
+            {{ forms.get('Country')?.hasError('required') ? 'Debe ingresar el país de la dirección de envío para continuar' : '' }}
+        </small>
+      </div>
     </div>
     <div class="relative z-0 w-full mb-5 group mt-10">
       <input formControlName="City" type="text" name="City" id="City" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
       <label for="City" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Ciudad</label>
+      <div class="h-[20px]">
+        <small *ngIf="forms.get('City')?.touched && forms.get('City')?.invalid" class="text-red-500 font-medium">
+            {{ forms.get('City')?.hasError('required') ? 'Debe ingresar la ciudad de la dirección de envío para continuar' : '' }}
+        </small>
+      </div>
     </div>
     <div class="relative z-0 w-full mb-5 group mt-10">
       <input  formControlName="Commune" type="text" name="Commune" id="Commune" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
-      <label for="Commune" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Communa</label>
+      <label for="Commune" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Comuna</label>
+      <div class="h-[20px]">
+        <small *ngIf="forms.get('Commune')?.touched && forms.get('Commune')?.invalid" class="text-red-500 font-medium">
+            {{ forms.get('Commune')?.hasError('required') ? 'Debe ingresar la comuna de la dirección de envío para continuar' : '' }}
+        </small>
+      </div>
     </div>
     <div class="relative z-0 w-full mb-5 group mt-10">
       <input  formControlName="Street" type="text" name="Street" id="Street" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
       <label for="Street" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Calle</label>
+      <div class="h-[20px]">
+        <small *ngIf="forms.get('Street')?.touched && forms.get('Street')?.invalid" class="text-red-500 font-medium">
+            {{ forms.get('Street')?.hasError('required') ? 'Debe ingresar la calle de la dirección de envío para continuar' : '' }}
+        </small>
+      </div>
     </div>
     <div *ngFor="let error of errorMessage" class="bg-red-500 rounded-lg mb-5 flex justify-center">
     <p *ngIf="error" class="text-white text-sm font-medium m-5">

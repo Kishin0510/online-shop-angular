@@ -65,7 +65,7 @@ export class EditUserFormComponent implements OnInit {
   /**
    * Fecha de nacimiento del usuario.
    */
-  userBirthdate = this.LocalStorageService.getVariable('user').birthdate;
+  userBirthdate = this.formatDate(this.LocalStorageService.getVariable('user').birthdate);
   /**
    * Género del usuario.
    */
@@ -140,5 +140,10 @@ export class EditUserFormComponent implements OnInit {
       this.error = true;
       this.errorMessage = error;
     }
+  }
+
+  formatDate(date: string): string {
+    const parsedDate = new Date(date);
+    return parsedDate.toISOString().split('T')[0];
   }
 }
