@@ -56,14 +56,34 @@ export class RegisterFormComponent {
    */
   registerForm() {
     this.form = this.fb.group({
-      rut: ['', Validators.required],
-      name: ['', Validators.required],
+      rut: ['', [Validators.required, Validators.pattern(/^\d{8}-[kK0-9]{1}$/)]],
+      name: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(255)]],
       Email: ['', [Validators.required, Validators.email]],
-      birthdate: ['', Validators.required],
-      GenderId: ['', Validators.required],
-      password: ['', Validators.required],
-      ConfirmPassword: ['', Validators.required],
+      birthdate: ['', [Validators.required]],
+      GenderId: ['', [Validators.required]],
+      password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(20)]],
+      ConfirmPassword: ['', [Validators.required]],
+    },{
+      validator: this.passwordMatchValidator
     });
+    
+    
+  }
+
+  passwordMatchValidator(group: FormGroup) {
+    const password = group.get('password')?.value;
+    const confirmPassword = group.get('ConfirmPassword')?.value;
+    if (password !== confirmPassword) {
+      group.get('ConfirmPassword')?.setErrors({ mismatch: true });
+    } else {
+      group.get('ConfirmPassword')?.setErrors(null);
+    }
+  }
+
+
+  get passwordMatch() {
+    const confirmPassword = this.form.get('ConfirmPassword');
+    return confirmPassword?.hasError('mismatch') && confirmPassword?.touched;
   }
 
   get rutValidate() {
@@ -97,15 +117,15 @@ export class RegisterFormComponent {
    * Registra un usuario en la base de datos si esta todo bien.
    */
   async register() {
-    this.error = false;
-    this.errorMessage = [];
-    Object.keys(this.form.controls).forEach(field => {
-    const control = this.form.get(field);
-    if (control) {
-      control.setErrors(null);
-    }
+    if (this.form.invalid) {
+      Object.keys(this.form.controls).forEach(field => {
+      const control = this.form.get(field);
+      if (control) {
+        control.setErrors(null);
+        }
     });
-    if (this.form.invalid) return;
+    return;
+    }
     try {
       const user: addUser = {
         rut: this.form.value.rut,
@@ -130,16 +150,6 @@ export class RegisterFormComponent {
     } catch (error: any) {
       this.error = true;
       this.errorMessage = error;
-      error.forEach((err: string) => {
-        const field = err.split(':')[0];
-        const message = err.split(':')[1];
-
-        const formControl = this.form.get(field);
-
-        if (formControl) {
-          formControl.setErrors({ serverError: message.trim() });
-        }
-      });
     }
   }
 }

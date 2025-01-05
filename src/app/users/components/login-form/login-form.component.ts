@@ -35,7 +35,7 @@ export class LoginFormComponent {
   /**
    * Mensajes de error.
    */
-  errorMessage: string[] = [];
+  errorMessage: string = '';
 
   /**
    * Servicio de autenticación.
@@ -97,12 +97,12 @@ export class LoginFormComponent {
           this.router.navigate(['/']);
         }
       } else {
-        console.log('Error en login', response);
         this.error = true;
+        this.errorMessage = 'Error al iniciar sesión';
       }
     } catch (error: any) {
       this.error = true;
-      this.errorMessage.push(error);
+      this.errorMessage = error;
     }
   }
 }
