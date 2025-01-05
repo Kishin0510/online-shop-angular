@@ -120,6 +120,7 @@ export class RegisterFormComponent {
       if (response.token){
         this.LocalStorageService.setVariable('token', response.token);
         this.LocalStorageService.setVariable('user', response.user);
+        this.LocalStorageService.updateLoginStatus(true, response.user.rol?.id === 1);
         console.log('Usuarios registrado:', this.LocalStorageService.getVariable('user'));
 
         this.router.navigate(['/']);
@@ -137,7 +138,7 @@ export class RegisterFormComponent {
 
         if (formControl) {
           formControl.setErrors({ serverError: message.trim() });
-        } 
+        }
       });
     }
   }

@@ -44,14 +44,6 @@ export class ShoppingListComponent implements OnInit {
    * Suscripción al observable de ítems en el carrito.
    */
   private subscription: Subscription = new Subscription();
-  /**
-   * IDs de los productos en el carrito.
-   */
-  productsId: string[] = [];
-  /**
-   * Cantidades de los productos en el carrito.
-   */
-  productsQuantity: number[] = [];
 
   constructor(private router: Router) { }
 
@@ -109,10 +101,6 @@ export class ShoppingListComponent implements OnInit {
     if (!token) {
       this.ToastService.warning('Debes iniciar sesión para continuar');
       this.router.navigate(['/auth']);
-      return;
-    }
-    if (this.productsId.length === 0) {
-      this.ToastService.error('Tu carrito está vacío. Agrega productos antes de proceder con la compra.');
       return;
     }
     this.router.navigate(['/shopping-address']);

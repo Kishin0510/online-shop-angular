@@ -104,7 +104,7 @@ export class EditUserFormComponent implements OnInit {
   async onSubmit() {
     if (this.forms.invalid) return;
     try {
-      const genderId = this.genders.find((gender) => gender.type === this.forms.value.gender?.value)?.id || 1;
+      const genderId = this.genders.find((gender) => gender.type === this.forms.value.gender)?.id || 1;
       const user: editUser = {
         name: this.forms.value.name,
         birthdate: this.forms.value.birthdate,
