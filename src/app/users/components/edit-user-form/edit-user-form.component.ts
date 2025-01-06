@@ -76,6 +76,11 @@ export class EditUserFormComponent implements OnInit {
    */
   userRolID = this.LocalStorageService.getVariable('user').rol.id;
 
+  /**
+   * Constructor del componente.
+   * @param fb - Servicio para crear formularios reactivos.
+   * @param router - Servicio para manejar la navegación entre páginas.
+   */
   constructor(private fb: FormBuilder, private router: Router) {}
 
   /**
