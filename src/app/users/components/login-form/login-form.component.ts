@@ -50,6 +50,11 @@ export class LoginFormComponent {
    */
   private ToastService = inject(ToastService);
 
+  /**
+   * Inicializa el componente y crea el formulario.
+   * @param fb - Constructor de formularios.
+   * @param router - Enrutador de la aplicación.
+   */
   constructor(private fb: FormBuilder, private router: Router) {
     this.loginForm();
   }
@@ -64,10 +69,16 @@ export class LoginFormComponent {
     });
   }
 
+  /**
+   * Indica si el campo de correo electrónico es inválido y ha sido tocado.
+   */
   get emailValidate() {
     return this.form.get('email')?.invalid && this.form.get('email')?.touched;
   }
 
+  /**
+   * Indica si el campo de contraseña es inválido y ha sido tocado.
+   */
   get passwordValidate() {
     return this.form.get('password')?.invalid && this.form.get('password')?.touched;
   }
