@@ -142,6 +142,11 @@ export class EditUserFormComponent implements OnInit {
     }
   }
 
+  /**
+   * Formatea una fecha en un string.
+   * @param date - La fecha a formatear.
+   * @returns La fecha formateada.
+   */
   formatDate(date: string): string {
     const parsedDate = new Date(date);
     return parsedDate.toISOString().split('T')[0];

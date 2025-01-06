@@ -47,10 +47,23 @@ export class RegisterFormComponent {
    */
   private LocalStorageService = inject(LocalStorageService);
 
+  /**
+   * Inicializa el componente y crea el formulario.
+   * @param fb - Constructor de formularios.
+   * @param router - Enrutador de la aplicación.
+   */
   constructor(private fb: FormBuilder, private router: Router) {
     this.registerForm();
   }
-  days: number[] = Array.from({ length: 31 }, (_, i) => i + 1); // Días del 1 al 31
+
+  // Variables para la fecha de nacimiento en el formulario de registro.
+  /**
+   * Días del mes.
+   */
+  days: number[] = Array.from({ length: 31 }, (_, i) => i + 1);
+  /**
+   * Meses del año.
+   */
   months = [
     { value: 1, label: 'Enero' },
     { value: 2, label: 'Febrero' },
@@ -65,6 +78,9 @@ export class RegisterFormComponent {
     { value: 11, label: 'Noviembre' },
     { value: 12, label: 'Diciembre' },
   ];
+  /**
+   * Años desde el año actual hasta 100 años atrás.
+   */
   years: number[] = Array.from(
     { length: 100 },
     (_, i) => new Date().getFullYear() - i
@@ -91,6 +107,10 @@ export class RegisterFormComponent {
     
   }
 
+  /**
+   * Valida que las contraseñas coincidan.
+   * @param group - Grupo de controles del formulario.
+   */
   passwordMatchValidator(group: FormGroup) {
     const password = group.get('password')?.value;
     const confirmPassword = group.get('ConfirmPassword')?.value;
@@ -100,6 +120,12 @@ export class RegisterFormComponent {
       group.get('ConfirmPassword')?.setErrors(null);
     }
   }
+
+  /**
+   * Valida la fecha de nacimiento.
+   * @param group - Grupo de controles del formulario.
+   * @returns Un objeto con errores si la fecha es inválida.
+   */
   validateBirthdate: ValidatorFn = (group: AbstractControl): ValidationErrors | null => {
     const day = group.get('day')?.value;
     const month = group.get('month')?.value;
@@ -117,30 +143,51 @@ export class RegisterFormComponent {
     return isValid ? null : { invalidDate: true };
   };
 
+  /**
+   * Indica si las contraseñas no coinciden.
+   */
   get passwordMatch() {
     const confirmPassword = this.form.get('ConfirmPassword');
     return confirmPassword?.hasError('mismatch') && confirmPassword?.touched;
   }
-
+  /**
+   * Indica si el campo rut es inválido y ha sido tocado.
+   */
   get rutValidate() {
     return this.form.get('rut')?.invalid && this.form.get('rut')?.touched;
   }
+
+  /**
+   * Indica si el campo nombre es inválido y ha sido tocado.
+   */
   get nameValidate() {
     return this.form.get('name')?.invalid && this.form.get('name')?.touched;
   }
 
+  /**
+   * Indica si el campo de correo electrónico es inválido y ha sido tocado.
+   */
   get emailValidate() {
     return this.form.get('Email')?.invalid && this.form.get('Email')?.touched;
   }
 
+  /**
+   * Indica si el campo id de genero es inválido y ha sido tocado.
+   */
   get GenderIdValidate() {
     return this.form.get('GenderId')?.invalid && this.form.get('GenderId')?.touched;
   }
 
+  /**
+   * Indica si el campo de contraseña es inválido y ha sido tocado.
+   */
   get passwordValidate() {
     return this.form.get('password')?.invalid && this.form.get('password')?.touched;
   }
 
+  /**
+   * Indica si el campo de confirmación de contraseña es inválido y ha sido tocado.
+   */
   get ConfirmPasswordValidate() {
     return this.form.get('ConfirmPassword')?.invalid && this.form.get('ConfirmPassword')?.touched;
   }
