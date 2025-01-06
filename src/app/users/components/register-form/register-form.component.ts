@@ -50,6 +50,25 @@ export class RegisterFormComponent {
   constructor(private fb: FormBuilder, private router: Router) {
     this.registerForm();
   }
+  days: number[] = Array.from({ length: 31 }, (_, i) => i + 1); // Días del 1 al 31
+  months = [
+    { value: 1, label: 'Enero' },
+    { value: 2, label: 'Febrero' },
+    { value: 3, label: 'Marzo' },
+    { value: 4, label: 'Abril' },
+    { value: 5, label: 'Mayo' },
+    { value: 6, label: 'Junio' },
+    { value: 7, label: 'Julio' },
+    { value: 8, label: 'Agosto' },
+    { value: 9, label: 'Septiembre' },
+    { value: 10, label: 'Octubre' },
+    { value: 11, label: 'Noviembre' },
+    { value: 12, label: 'Diciembre' },
+  ];
+  years: number[] = Array.from(
+    { length: 100 },
+    (_, i) => new Date().getFullYear() - i
+  );
 
   /**
    * Crea el formulario reactivo para el registro de usuario.
@@ -59,12 +78,14 @@ export class RegisterFormComponent {
       rut: ['', [Validators.required, Validators.pattern(/^\d{8}-[kK0-9]{1}$/)]],
       name: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(255)]],
       Email: ['', [Validators.required, Validators.email]],
-      birthdate: ['', [Validators.required]],
+      day: ['', [Validators.required]],
+      month: ['', [Validators.required]],
+      year: ['', [Validators.required]],
       GenderId: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(20)]],
       ConfirmPassword: ['', [Validators.required]],
     },{
-      validator: this.passwordMatchValidator
+      validators: [this.passwordMatchValidator, this.validateBirthdate],
     });
     
     
@@ -79,7 +100,22 @@ export class RegisterFormComponent {
       group.get('ConfirmPassword')?.setErrors(null);
     }
   }
-
+  validateBirthdate: ValidatorFn = (group: AbstractControl): ValidationErrors | null => {
+    const day = group.get('day')?.value;
+    const month = group.get('month')?.value;
+    const year = group.get('year')?.value;
+  
+    if (!day || !month || !year) {
+      return { incompleteDate: true };
+    }
+  
+    const birthdate = new Date(year, month - 1, day);
+    const isValid = birthdate.getFullYear() === +year &&
+                    birthdate.getMonth() === month - 1 &&
+                    birthdate.getDate() === +day;
+  
+    return isValid ? null : { invalidDate: true };
+  };
 
   get passwordMatch() {
     const confirmPassword = this.form.get('ConfirmPassword');
@@ -97,10 +133,6 @@ export class RegisterFormComponent {
     return this.form.get('Email')?.invalid && this.form.get('Email')?.touched;
   }
 
-  get birthdateValidate() {
-    return this.form.get('birthdate')?.invalid && this.form.get('birthdate')?.touched;
-  }
-
   get GenderIdValidate() {
     return this.form.get('GenderId')?.invalid && this.form.get('GenderId')?.touched;
   }
@@ -112,7 +144,7 @@ export class RegisterFormComponent {
   get ConfirmPasswordValidate() {
     return this.form.get('ConfirmPassword')?.invalid && this.form.get('ConfirmPassword')?.touched;
   }
-
+  
   /**
    * Registra un usuario en la base de datos si esta todo bien.
    */
@@ -127,10 +159,14 @@ export class RegisterFormComponent {
     return;
     }
     try {
+      const day = this.form.value.day;
+      const month = this.form.value.month;
+      const year = this.form.value.year;
+      const birthdate = `${year}-${month}-${day}`;
       const user: addUser = {
         rut: this.form.value.rut,
         name: this.form.value.name,
-        birthday: this.form.value.birthdate,
+        birthday: birthdate,
         Email: this.form.value.Email,
         GenderId: this.form.value.GenderId,
         password: this.form.value.password,
