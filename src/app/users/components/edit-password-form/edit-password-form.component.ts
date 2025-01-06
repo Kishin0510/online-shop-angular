@@ -91,14 +91,23 @@ export class EditPasswordFormComponent implements OnInit{
     }
   }
 
+  /**
+   * Indica si el campo de contraseña actual es inválido.
+   */
   get oldpasswordInvalid() {
     return this.forms.get('oldpassword')?.invalid && this.forms.get('oldpassword')?.touched;
   }
 
+  /**
+   * Indica si el campo de nueva contraseña es inválido.
+   */
   get newpasswordInvalid() {
     return this.forms.get('newpassword')?.invalid && this.forms.get('newpassword')?.touched;
   }
 
+  /**
+   * Indica si el campo de confirmación de nueva contraseña es inválido.
+   */
   get ConfirmnewpasswordInvalid() {
     return this.forms.get('Confirmnewpassword')?.invalid && this.forms.get('Confirmnewpassword')?.touched;
   }
