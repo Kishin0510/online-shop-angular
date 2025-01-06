@@ -8,6 +8,7 @@ Es necesario tener instalado Node.js y Node Package Manager (npm)
   
 Integrantes Grupo 13:
   1. Nicolás Patricio Tapia Carrasco
+  2. Ignacio Javier Carvajal Canelo
 
 Profesor: 
 
